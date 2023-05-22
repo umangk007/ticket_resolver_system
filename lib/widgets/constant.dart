@@ -14,6 +14,7 @@ class BigText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(left: 10),
       alignment: Alignment.centerLeft,
       width: screenWidth(context),
       height: screenHeight(context, dividedBy: 15),
@@ -55,6 +56,74 @@ class DiscriptiveText extends StatelessWidget {
       child: Text(text,
         style: const TextStyle(fontSize: 16,color: Colors.grey,),
         maxLines: maxline,
+      ),
+    );
+  }
+}
+
+class CommenTextfield extends StatelessWidget {
+
+  String hintText;
+
+   CommenTextfield({
+    super.key,
+    required this.hintText
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(left: 10,),
+      height: screenHeight(context, dividedBy: 17),width: screenWidth(context),
+      decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(10)),
+      child: TextFormField(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hintText,
+          alignLabelWithHint: true,
+          hintStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.cancel_sharp)),
+        ),
+      ),
+    );
+  }
+}
+
+class CommenSmallTextfield extends StatelessWidget {
+
+  String hintText;
+
+   CommenSmallTextfield({
+    super.key,
+     required this.hintText
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(
+        left: 10,
+      ),
+      height: screenHeight(context, dividedBy: 17),
+      width: screenWidth(context, dividedBy: 2.5),
+      decoration: BoxDecoration(
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(10)),
+      child: TextFormField(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hintText,
+          alignLabelWithHint: true,
+          hintStyle: const TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w500),
+          suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.cancel_sharp)),
+        ),
       ),
     );
   }
