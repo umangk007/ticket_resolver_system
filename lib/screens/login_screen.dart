@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPasswordScreen(),));
                         },
                         child: Container(
-                          height: screenHeight(context, dividedBy: 15),
+                          height: screenHeight(context, dividedBy: 17),
                           width: screenWidth(context, dividedBy: 3.5),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(

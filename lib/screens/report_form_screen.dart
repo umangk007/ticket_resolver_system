@@ -24,7 +24,19 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
   String? value;
   Uint8List? sign;
   bool showSignaturepad = false;
+  final formkey = GlobalKey<FormState>();
   late SignatureController signController;
+  TextEditingController amp = TextEditingController();
+  TextEditingController frqn = TextEditingController();
+  TextEditingController temp = TextEditingController();
+  TextEditingController item = TextEditingController();
+  TextEditingController srno = TextEditingController();
+  TextEditingController power = TextEditingController();
+  TextEditingController amount = TextEditingController();
+  TextEditingController voltage = TextEditingController();
+  TextEditingController mlcController = TextEditingController();
+  TextEditingController actionController = TextEditingController();
+  TextEditingController complaintController = TextEditingController();
 
   @override
   void initState() {
@@ -47,129 +59,137 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
           margin: const EdgeInsets.only(left: 10, right: 10),
           child: Stack(
             children: [
-              Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 5, right: 5),
-                  height: screenHeight(context, dividedBy: 17),
-                  width: screenWidth(context),
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: DropdownButton<String>(
-                    value: value,
-                    iconSize: 36,
-                    isExpanded: true,
-                    isDense: true,
-                    menuMaxHeight: screenHeight(context, dividedBy: 3.2),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    icon: const Icon(Icons.arrow_drop_down_sharp,
-                        color: Colors.black),
-                    hint: const Text("Party Name",
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                    items: parties.map(buildMenuItem).toList(),
-                    onChanged: (value) => setState(() {
-                      this.value = value;
-                    }),
-                  ),
-                ),
-                CommenTextfield(hintText: "Mlc type & model"),
-                CommenTextfield(hintText: "Nature of Complaint"),
-                CommenTextfield(hintText: "Action taken"),
-                const SizedBox(
-                  height: 10,
-                ),
-                const BigText(text: "Parameter detailes :"),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CommenSmallTextfield(
-                      hintText: 'Power',
+              Form(
+                key: formkey,
+                child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 5, right: 5),
+                    height: screenHeight(context, dividedBy: 17),
+                    width: screenWidth(context),
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<String>(
+                      value: value,
+                      iconSize: 36,
+                      isExpanded: true,
+                      isDense: true,
+                      menuMaxHeight: screenHeight(context, dividedBy: 3.2),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      icon: const Icon(Icons.arrow_drop_down_sharp,
+                          color: Colors.black),
+                      hint: const Text("Party Name",
+                          style:
+                              TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                      items: parties.map(buildMenuItem).toList(),
+                      onChanged: (value) => setState(() {
+                        this.value = value;
+                      }),
                     ),
-                    CommenSmallTextfield(hintText: "Amp"),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CommenSmallTextfield(
-                      hintText: 'Frequency',
-                    ),
-                    CommenSmallTextfield(hintText: "Voltage"),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CommenSmallTextfield(
-                      hintText: 'Temp.',
-                    ),
-                    CommenSmallTextfield(hintText: "Item"),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: CommenSmallTextfield(
-                    hintText: 'Sr no.',
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const BigText(text: "Cost :"),
-                Align(
-                  alignment: Alignment.center,
-                  child: CommenSmallTextfield(
-                    hintText: 'Amount',
+                  CommenTextfield(hintText: "Mlc type & model", controller: mlcController),
+                  CommenTextfield(hintText: "Nature of Complaint", controller: complaintController,),
+                  CommenTextfield(hintText: "Action taken", controller: actionController,),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const BigText(text: "Signature :"),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 10),
-                      height: screenHeight(context, dividedBy: 6),width: screenWidth(context, dividedBy: 2.5),
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: ClipRRect(
-                        child: (sign == null) ? null : Image.memory(sign!),
+                  const BigText(text: "Parameter detailes :"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CommenSmallTextfield(
+                        hintText: 'Power',
+                        controller: power,
                       ),
+                      CommenSmallTextfield(hintText: "Amp", controller: amp),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CommenSmallTextfield(
+                        hintText: 'Frequency',
+                        controller: frqn,
+                      ),
+                      CommenSmallTextfield(hintText: "Voltage", controller: voltage),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CommenSmallTextfield(
+                        hintText: 'Temp.',
+                        controller: temp,
+                      ),
+                      CommenSmallTextfield(hintText: "Item", controller: item),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: CommenSmallTextfield(
+                      hintText: 'Sr no.',
+                      controller: srno,
                     ),
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            showSignaturepad = true;
-                          });
-                        },
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                        backgroundColor: MaterialStateProperty.all(Colors.amberAccent)
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const BigText(text: "Cost :"),
+                  Align(
+                    alignment: Alignment.center,
+                    child: CommenSmallTextfield(
+                      hintText: 'Amount',
+                      controller: amount,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const BigText(text: "Signature :"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        height: screenHeight(context, dividedBy: 6),width: screenWidth(context, dividedBy: 2.5),
+                        decoration: BoxDecoration(border: Border.all()),
+                        child: ClipRRect(
+                          child: (sign == null) ? null : Image.memory(sign!),
                         ),
-                        child: const Text("Take Signature"))
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            backgroundColor: MaterialStateProperty.all(Colors.greenAccent)
-                        ),
-                        child: const Text("Completed"))
-                  ],
-                )
-              ],
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              showSignaturepad = true;
+                            });
+                          },
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                          backgroundColor: MaterialStateProperty.all(Colors.amberAccent)
+                          ),
+                          child: const Text("Take Signature"))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              backgroundColor: MaterialStateProperty.all(Colors.greenAccent)
+                          ),
+                          child: const Text("Completed"))
+                    ],
+                  )
+                ],
             ),
+              ),
              showSignaturepad ? Positioned(
                 left: 0,
                   right: 0,
@@ -186,6 +206,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               backgroundColor: Colors.yellow.shade100
                           ),
                         ),
+                        const Divider(height: 0,color: Colors.black,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -203,7 +224,8 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                                   });;
                                 }
                             }, icon: const Icon(Icons.check_sharp, size: 32,)),
-                            IconButton(onPressed: () {
+                            IconButton(
+                                onPressed: () {
                               setState(() {
                                 if (signController.isEmpty) {
                                   setState(() {
@@ -247,5 +269,6 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     exportController.dispose();
     return signature;
   }
+
 
 }

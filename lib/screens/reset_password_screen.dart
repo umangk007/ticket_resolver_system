@@ -16,8 +16,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool showRepeatPassword = false;
   bool showNewPassword = false;
   final formkey = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController newpassController = TextEditingController();
+  TextEditingController repeatpassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       style:
                       TextStyle(fontSize: 18, fontWeight: FontWeight.w500,)),
                   TextFormField(
-                    controller: usernameController,
+                    controller: newpassController,
                     obscureText: !showNewPassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -72,7 +72,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       style:
                       TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
                   TextFormField(
-                    controller: passwordController,
+                    controller: repeatpassController,
                     obscureText: !showRepeatPassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -119,7 +119,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(),));
                         },
                         child: Container(
-                          height: screenHeight(context, dividedBy: 15),
+                          height: screenHeight(context, dividedBy: 17),
                           width: screenWidth(context, dividedBy: 3.5),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -142,4 +142,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    newpassController.dispose();
+    repeatpassController.dispose();
+    super.dispose();
+  }
+
 }

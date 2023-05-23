@@ -111,14 +111,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: screenHeight(context, dividedBy: 20),),
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportFormScreen(),));
-                },
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 191, 208))),
-                child: const Text("Start", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500)),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportFormScreen(),));
+              },
+              child: Container(
+                height: screenHeight(context, dividedBy: 17),
+                width: screenWidth(context, dividedBy: 3.5),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(),
+                    color: const Color.fromARGB(255, 0, 191, 208)),
+                child: const Text("Start",
+                    style: TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500)),
               ),
             ),
           ],
@@ -128,8 +135,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
 
 
 

@@ -17,7 +17,7 @@ class BigText extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10),
       alignment: Alignment.centerLeft,
       width: screenWidth(context),
-      height: screenHeight(context, dividedBy: 15),
+      height: screenHeight(context, dividedBy: 16),
       decoration: BoxDecoration(border: Border.all(),color: Colors.yellow.shade50,),
       child: Text(text, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 22)),
     );
@@ -61,14 +61,51 @@ class DiscriptiveText extends StatelessWidget {
   }
 }
 
-class CommenTextfield extends StatelessWidget {
+class CommenTextfield extends StatefulWidget {
 
   String hintText;
+  TextEditingController controller;
 
    CommenTextfield({
     super.key,
-    required this.hintText
+    required this.hintText,
+     required this.controller
   });
+
+  @override
+  State<CommenTextfield> createState() => _CommenTextfieldState();
+}
+
+class _CommenTextfieldState extends State<CommenTextfield> {
+
+  bool usernameEmpty = true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      usernameFieldCheck();
+    });
+  }
+
+  usernameFieldCheck() {
+    if (widget.controller.text.isEmpty) {
+      setState(() {
+        usernameEmpty = true;
+      });
+    } else {
+      setState(() {
+        usernameEmpty = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +115,18 @@ class CommenTextfield extends StatelessWidget {
       height: screenHeight(context, dividedBy: 17),width: screenWidth(context),
       decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(10)),
       child: TextFormField(
+        controller: widget.controller,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: hintText,
+          hintText: widget.hintText,
           alignLabelWithHint: true,
           hintStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          suffixIcon: IconButton(
-              onPressed: () {},
+          suffixIcon: (usernameEmpty) ? null : IconButton(
+              onPressed: () {
+                setState(() {
+                  widget.controller.clear();
+                });
+              },
               icon: const Icon(Icons.cancel_sharp)),
         ),
       ),
@@ -92,14 +134,50 @@ class CommenTextfield extends StatelessWidget {
   }
 }
 
-class CommenSmallTextfield extends StatelessWidget {
+class CommenSmallTextfield extends StatefulWidget {
 
   String hintText;
+  TextEditingController controller;
 
    CommenSmallTextfield({
     super.key,
-     required this.hintText
+     required this.hintText,
+     required this.controller
   });
+
+  @override
+  State<CommenSmallTextfield> createState() => _CommenSmallTextfieldState();
+}
+
+class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
+
+  bool usernameEmpty = true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      usernameFieldCheck();
+    });
+  }
+
+  usernameFieldCheck() {
+    if (widget.controller.text.isEmpty) {
+      setState(() {
+        usernameEmpty = true;
+      });
+    } else {
+      setState(() {
+        usernameEmpty = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,16 +192,21 @@ class CommenSmallTextfield extends StatelessWidget {
           border: Border.all(),
           borderRadius: BorderRadius.circular(10)),
       child: TextFormField(
+        controller: widget.controller,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: hintText,
+          hintText: widget.hintText,
           alignLabelWithHint: true,
           hintStyle: const TextStyle(
               fontSize: 18, fontWeight: FontWeight.w500),
-          suffixIcon: IconButton(
-              onPressed: () {},
+          suffixIcon: (usernameEmpty) ? null : IconButton(
+              onPressed: () {
+
+                  widget.controller.clear();
+              },
               icon: const Icon(Icons.cancel_sharp)),
         ),
+        keyboardType: TextInputType.number,
       ),
     );
   }
