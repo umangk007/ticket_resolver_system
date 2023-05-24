@@ -68,7 +68,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                     height: screenHeight(context, dividedBy: 17),
                     padding: const EdgeInsets.only(top: 5),
                     decoration: BoxDecoration(
-                        border: Border.all(),
+                        border: Border.all(color: green),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<String>(
                       value: value,
@@ -81,7 +81,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                           color: Colors.black),
                       hint: const Text("Party Name",
                           style:
-                              TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                              TextStyle(fontSize: 18, fontWeight: FontWeight.normal)),
                       items: parties.map(buildMenuItem).toList(),
                       onChanged: (value) => setState(() {
                         this.value = value;

@@ -43,10 +43,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       )),
+                  const SizedBox(height: 5,),
                   TextFormField(
                     controller: newpassController,
                     obscureText: !showNewPassword,
                     decoration: InputDecoration(
+                      focusColor: green,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -75,10 +81,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const Text("Repeat Password",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 5,),
                   TextFormField(
                     controller: repeatpassController,
                     obscureText: !showRepeatPassword,
                     decoration: InputDecoration(
+                      focusColor: green,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

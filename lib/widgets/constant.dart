@@ -21,7 +21,7 @@ class BigText extends StatelessWidget {
         Expanded(
           child: Container(
             height: 20,
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             child: const Divider(thickness: 2,height: 0,color: green,endIndent: 5,indent: 5,),
           ),
         )
@@ -92,7 +92,6 @@ class CommenTextfield extends StatefulWidget {
   @override
   State<CommenTextfield> createState() => _CommenTextfieldState();
 }
-////////////////////////////////////////////////////////////////////////////////
 class _CommenTextfieldState extends State<CommenTextfield> {
 
   bool usernameEmpty = true;
@@ -133,12 +132,17 @@ class _CommenTextfieldState extends State<CommenTextfield> {
       child: TextFormField(
         controller: widget.controller,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(top: 3, left: 10),
           focusColor: green,
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+          disabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+          contentPadding: const EdgeInsets.only(top: 3, left: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: widget.hintText,
+          hintStyle: const TextStyle(fontWeight: FontWeight.normal),
           suffixIcon: (usernameEmpty)
               ? null
               : IconButton(
@@ -168,7 +172,6 @@ class CommenSmallTextfield extends StatefulWidget {
   @override
   State<CommenSmallTextfield> createState() => _CommenSmallTextfieldState();
 }
-////////////////////////////////////////////////////////////////////////////////
 class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
 
   bool usernameEmpty = true;
@@ -186,10 +189,15 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(top: 3, left: 10),
           focusColor: green,
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+          disabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: widget.hintText,
+          hintStyle: TextStyle(fontWeight: FontWeight.normal),
           suffixIcon: (usernameEmpty)
               ? null
               : IconButton(

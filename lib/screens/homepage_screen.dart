@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 SmallText(text: "Complain "),
                 DiscriptiveText(
-                  text: "Somthing is not working",
+                  text: "Something is not working",
                 )
               ],
             ),
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const SmallText(text: "Address"),
                 SizedBox(
-                  width: screenWidth(context, dividedBy: 1.6),
+                  width: screenWidth(context, dividedBy: 1.7),
                   height: screenHeight(context, dividedBy: 7.5),
                   child: const DiscriptiveText(text: text, maxline: 4),
                 )

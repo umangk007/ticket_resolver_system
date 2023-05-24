@@ -47,14 +47,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Username",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 5,),
                   TextFormField(
                     controller: usernameController,
                     decoration: InputDecoration(
                       focusColor: green,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Enter your Email or Mobile no..",
+                      hintStyle: const TextStyle(fontWeight: FontWeight.normal),
                       suffixIcon: (usernameEmpty)
                           ? const Icon(Icons.person)
                           : IconButton(
@@ -73,14 +79,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Password",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 5,),
                   TextFormField(
                     controller: passwordController,
                     obscureText: !showPassword,
                     decoration: InputDecoration(
+                      focusColor: green,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Enter your Password..",
+                      hintStyle: const TextStyle(fontWeight: FontWeight.normal),
                       suffixIcon: (showPassword)
                           ? IconButton(
                               onPressed: () {
