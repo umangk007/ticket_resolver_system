@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
 import 'package:ticket_resolver_system/screens/reset_password_screen.dart';
+import 'package:ticket_resolver_system/widgets/constant.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   bool usernameEmpty = true;
   bool showPassword = false;
   final formkey = GlobalKey<FormState>();
@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: usernameController,
                     decoration: InputDecoration(
+                      focusColor: green,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -106,35 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text("Forget password",
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.blue,
+                          color: green,
                         )),
                   ),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 12),
                   ),
-                  Row(
-                    children: [
-                      const Expanded(child: SizedBox()),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPasswordScreen(),));
-                        },
-                        child: Container(
-                          height: screenHeight(context, dividedBy: 17),
-                          width: screenWidth(context, dividedBy: 3.5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 0, 191, 208)),
-                          child: const Text("Login",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500)),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                    ],
-                  ),
+                  CommenButton(
+                    text: "Login",
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ResetPasswordScreen(),
+                        )),
+                  )
                 ],
               ),
             ),

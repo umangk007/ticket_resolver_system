@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_resolver_system/screens/homepage_screen.dart';
 import 'package:ticket_resolver_system/screens/login_screen.dart';
+import 'package:ticket_resolver_system/widgets/constant.dart';
 
 import '../helper/screen_size.dart';
 
@@ -12,7 +13,6 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-
   bool showRepeatPassword = false;
   bool showNewPassword = false;
   final formkey = GlobalKey<FormState>();
@@ -35,12 +35,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     width: screenWidth(context),
                     height: screenHeight(context, dividedBy: 3.5),
                     alignment: Alignment.center,
-                      color: const Color.fromARGB(255, 255, 255, 255),
+                    color: const Color.fromARGB(255, 255, 255, 255),
                     child: Image.asset("assets/images/logo.jpg"),
                   ),
                   const Text("New Password",
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500,)),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      )),
                   TextFormField(
                     controller: newpassController,
                     obscureText: !showNewPassword,
@@ -50,18 +52,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                       hintText: "Enter new password",
                       suffixIcon: (showNewPassword)
-                          ? IconButton(onPressed: () {
-                            setState(() {
-                              showNewPassword = !showNewPassword;
-                            });
-                      }, icon: const Icon(Icons.visibility_sharp))
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showNewPassword = !showNewPassword;
+                                });
+                              },
+                              icon: const Icon(Icons.visibility_sharp))
                           : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showNewPassword = !showNewPassword;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility_off_sharp)),
+                              onPressed: () {
+                                setState(() {
+                                  showNewPassword = !showNewPassword;
+                                });
+                              },
+                              icon: const Icon(Icons.visibility_off_sharp)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -70,7 +74,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   const Text("Repeat Password",
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
                   TextFormField(
                     controller: repeatpassController,
                     obscureText: !showRepeatPassword,
@@ -81,20 +85,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       hintText: "Enter new password again",
                       suffixIcon: (showRepeatPassword)
                           ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showRepeatPassword = !showRepeatPassword;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility_sharp))
+                              onPressed: () {
+                                setState(() {
+                                  showRepeatPassword = !showRepeatPassword;
+                                });
+                              },
+                              icon: const Icon(Icons.visibility_sharp))
                           : IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showRepeatPassword = !showRepeatPassword;
-                          });
-                        },
-                        icon: const Icon(Icons.visibility_off_sharp),
-                      ),
+                              onPressed: () {
+                                setState(() {
+                                  showRepeatPassword = !showRepeatPassword;
+                                });
+                              },
+                              icon: const Icon(Icons.visibility_off_sharp),
+                            ),
                     ),
                   ),
                   Container(
@@ -105,35 +109,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: const Text("Forget password ?",
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.blue,
+                          color: green,
                         )),
                   ),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 12),
                   ),
-                  Row(
-                    children: [
-                      const Expanded(child: SizedBox()),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(),));
-                        },
-                        child: Container(
-                          height: screenHeight(context, dividedBy: 17),
-                          width: screenWidth(context, dividedBy: 3.5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 0, 191, 208)),
-                          child: const Text("Reset",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500)),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                    ],
-                  ),
+                  CommenButton(
+                    text: "Reset",
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        )),
+                  )
                 ],
               ),
             ),
@@ -149,5 +138,4 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     repeatpassController.dispose();
     super.dispose();
   }
-
 }

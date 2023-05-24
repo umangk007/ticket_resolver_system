@@ -56,17 +56,17 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          margin: const EdgeInsets.only(left: 10, right: 10),
+          margin: const EdgeInsets.only(left: 15, right: 10, bottom: 10),
           child: Stack(
             children: [
               Form(
                 key: formkey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 5, right: 5),
                     height: screenHeight(context, dividedBy: 17),
-                    width: screenWidth(context),
+                    padding: const EdgeInsets.only(top: 5),
                     decoration: BoxDecoration(
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(10)),
@@ -94,39 +94,39 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const BigText(text: "Parameter detailes :"),
+                  const BigText(text: "Parameter details"),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CommenSmallTextfield(
                         hintText: 'Power',
                         controller: power,
                       ),
+                      SizedBox(width: screenWidth(context, dividedBy: 20)),
                       CommenSmallTextfield(hintText: "Amp", controller: amp),
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CommenSmallTextfield(
                         hintText: 'Frequency',
                         controller: frqn,
                       ),
+                      SizedBox(width: screenWidth(context, dividedBy: 20)),
                       CommenSmallTextfield(hintText: "Voltage", controller: voltage),
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CommenSmallTextfield(
                         hintText: 'Temp.',
                         controller: temp,
                       ),
+                      SizedBox(width: screenWidth(context, dividedBy: 20)),
                       CommenSmallTextfield(hintText: "Item", controller: item),
                     ],
                   ),
                   Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerLeft,
                     child: CommenSmallTextfield(
                       hintText: 'Sr no.',
                       controller: srno,
@@ -135,58 +135,33 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const BigText(text: "Cost :"),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CommenSmallTextfield(
-                      hintText: 'Amount',
-                      controller: amount,
-                    ),
+                  const BigText(text: "Cost"),
+                  CommenSmallTextfield(
+                    hintText: 'Amount',
+                    controller: amount,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const BigText(text: "Signature :"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
+                  const BigText(text: "Signature"),
+                  Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () => setState(() {
+                        showSignaturepad = true;
+                      }),
+                      child: Container(
+                        alignment: Alignment.center,
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
-                        height: screenHeight(context, dividedBy: 6),width: screenWidth(context, dividedBy: 2.5),
+                        height: screenHeight(context, dividedBy: 5.5),width: screenWidth(context, dividedBy: 2),
                         decoration: BoxDecoration(border: Border.all()),
                         child: ClipRRect(
-                          child: (sign == null) ? null : Image.memory(sign!),
+                          child: (sign == null) ? const Text("Click here to sign", style: TextStyle(fontSize: 18),) : Image.memory(sign!),
                         ),
                       ),
-                      TextButton(
-                          onPressed: () {
-                            setState(() {
-                              showSignaturepad = true;
-                            });
-                          },
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                          backgroundColor: MaterialStateProperty.all(Colors.amberAccent)
-                          ),
-                          child: const Text("Take Signature"))
-                    ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              backgroundColor: MaterialStateProperty.all(Colors.greenAccent)
-                          ),
-                          child: const Text("Completed"))
-                    ],
-                  )
+                  CommenButton(text: "Completed", onTap: () {})
                 ],
             ),
               ),
