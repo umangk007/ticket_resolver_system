@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_resolver_system/screens/login_screen.dart';
-import 'package:ticket_resolver_system/screens/reset_password_screen.dart';
-import 'package:ticket_resolver_system/widgets/constant.dart';
+import 'package:flutter/services.dart';
+import 'package:ticket_resolver_system/screens/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -15,10 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }

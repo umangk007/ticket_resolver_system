@@ -14,29 +14,21 @@ class MyDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            Stack(children: [
-              Container(
-                width: screenWidth(context),
-                height: screenHeight(context, dividedBy: 6),
-                margin: const EdgeInsets.only(top: 10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, border: Border.all()),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.asset(
-                      "assets/images/logo.jpg",
-                      fit: BoxFit.cover,
-                    )),
+            Container(
+              width: screenWidth(context),
+              height: screenHeight(context, dividedBy: 6),
+              margin: const EdgeInsets.only(top: 10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, border: Border.all()),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    "assets/images/logo.jpg",
+                    fit: BoxFit.cover,
+                  )
               ),
-              Positioned(
-                bottom: 0,
-                  right: screenWidth(context, dividedBy: 6.8),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.camera_alt_sharp, size: 30),
-                  ))
-            ]),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 15),
               alignment: Alignment.center,

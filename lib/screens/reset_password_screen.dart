@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/screens/homepage_screen.dart';
 import 'package:ticket_resolver_system/screens/login_screen.dart';
 import 'package:ticket_resolver_system/widgets/constant.dart';
@@ -15,6 +16,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool showRepeatPassword = false;
   bool showNewPassword = false;
+  bool isDisabled = false;
   final formkey = GlobalKey<FormState>();
   TextEditingController newpassController = TextEditingController();
   TextEditingController repeatpassController = TextEditingController();
@@ -43,16 +45,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       )),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
                     controller: newpassController,
                     obscureText: !showNewPassword,
                     decoration: InputDecoration(
                       focusColor: green,
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       disabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -74,6 +80,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               icon: const Icon(Icons.visibility_off_sharp)),
                     ),
                     keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter password";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 18),
@@ -81,16 +94,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const Text("Repeat Password",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
                     controller: repeatpassController,
                     obscureText: !showRepeatPassword,
                     decoration: InputDecoration(
                       focusColor: green,
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       disabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -112,29 +129,39 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               icon: const Icon(Icons.visibility_off_sharp),
                             ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      right: 5,
-                    ),
-                    alignment: Alignment.centerRight,
-                    child: const Text("Forget password ?",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: green,
-                        )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter password";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   SizedBox(
-                    height: screenHeight(context, dividedBy: 12),
+                    height: screenHeight(context, dividedBy: 10),
                   ),
                   CommenButton(
-                    text: "Reset",
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        )),
-                  )
+                      text: "Reset",
+                      isDisabled: isDisabled,
+                      onTap: () {
+                        if (formkey.currentState!.validate()) {
+                          if (newpassController.text ==
+                              repeatpassController.text) {
+                            Repository()
+                                .resetPassword(newpassController.text, context);
+                          } else {
+                            const SnackBar snackBar = SnackBar(
+                              content: Text('Both the passwords are not same.'),
+                              duration: Duration(seconds: 2),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }
+                        } else {
+                          setState(() {
+                            isDisabled = true;
+                          });
+                        }
+                      })
                 ],
               ),
             ),

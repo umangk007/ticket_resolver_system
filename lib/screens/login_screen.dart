@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
 import 'package:ticket_resolver_system/screens/reset_password_screen.dart';
 import 'package:ticket_resolver_system/widgets/constant.dart';
@@ -13,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool usernameEmpty = true;
   bool showPassword = false;
+  bool isDisabled = false;
   final formkey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -47,15 +49,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Username",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
                     controller: usernameController,
                     decoration: InputDecoration(
                       focusColor: green,
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       disabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: green),borderRadius: BorderRadius.circular(10)),
+                          borderSide: const BorderSide(color: green),
+                          borderRadius: BorderRadius.circular(10)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -72,6 +78,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: const Icon(Icons.cancel_sharp)),
                     ),
                     keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter username";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 18),
@@ -79,7 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Password",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
                     controller: passwordController,
                     obscureText: !showPassword,
@@ -113,6 +128,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: const Icon(Icons.visibility_off_sharp),
                             ),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter password";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -129,13 +151,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: screenHeight(context, dividedBy: 12),
                   ),
                   CommenButton(
-                    text: "Login",
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ResetPasswordScreen(),
-                        )),
-                  )
+                      text: "Login",
+                      isDisabled: isDisabled,
+                      onTap: () {
+                        if(formkey.currentState!.validate()) {
+                          Repository().userLogIn(usernameController.text,
+                              passwordController.text, context);
+                        } else {
+                          setState(() {
+                            isDisabled = true;
+                          });
+                        }
+                      })
                 ],
               ),
             ),
