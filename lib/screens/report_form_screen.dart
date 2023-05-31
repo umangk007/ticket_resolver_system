@@ -1,22 +1,30 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
+import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
 
 import '../widgets/constant.dart';
 
 class ReportFormScreen extends StatefulWidget {
-  const ReportFormScreen({Key? key}) : super(key: key);
+  String? partyName;
+  String partyId;
+  String ticketId;
+
+  ReportFormScreen(
+      {Key? key, this.partyName, required this.partyId, required this.ticketId})
+      : super(key: key);
 
   @override
   State<ReportFormScreen> createState() => _ReportFormScreenState();
 }
 
 class _ReportFormScreenState extends State<ReportFormScreen> {
-
   String? value;
   Uint8List? sign;
+  bool isDisabled = false;
   bool showSignaturepad = false;
   final formkey = GlobalKey<FormState>();
   late SignatureController signController;
@@ -39,7 +47,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     signController =
         SignatureController(penColor: Colors.black, penStrokeWidth: 3);
     pN = TextEditingController();
-    pN.text = "Party Name";
+    pN.text = widget.partyName ?? "";
   }
 
   @override
@@ -59,16 +67,40 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  CommenTextfield(controller: pN, field: false),
+                  const SizedBox(height: 10),
                   CommenTextfield(
-                      controller: pN, field: false),
-                  CommenTextfield(
-                      hintText: "Mlc type & model", controller: mlcController),
+                      hintText: "Mlc type & model",
+                      validate: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter Machine type";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: mlcController),
+                  const SizedBox(height: 10),
                   CommenTextfield(
                     hintText: "Nature of Complaint",
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter Nature of complain";
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: complaintController,
                   ),
+                  const SizedBox(height: 10),
                   CommenTextfield(
                     hintText: "Action taken",
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter Action taken";
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: actionController,
                   ),
                   const SizedBox(
@@ -117,9 +149,21 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                     height: 10,
                   ),
                   const BigText(text: "Cost"),
-                  CommenSmallTextfield(
-                    hintText: 'Amount',
-                    controller: amount,
+                  Container(
+                    width: screenWidth(context, dividedBy: 2.2),
+                    alignment: Alignment.centerLeft,
+                    // decoration: BoxDecoration(border: Border.all()),
+                    child: CommenTextfield(
+                      controller: amount,
+                      validate: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter Amount";
+                        } else {
+                          return null;
+                        }
+                      },
+                      hintText: "Amount",
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -148,7 +192,33 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       ),
                     ),
                   ),
-                  CommenButton(text: "Completed", onTap: () {})
+                  CommenButton(
+                      text: "Completed",
+                      isDisabled: isDisabled,
+                      onTap: () {
+                        if (formkey.currentState!.validate()) {
+                          Repository().feedbackForm(
+                              context,
+                              widget.partyId,
+                              widget.ticketId,
+                              mlcController.text,
+                              complaintController.text,
+                              actionController.text,
+                              (power.text.isEmpty ? 0 : power.text) as int?,
+                              (amp.text.isEmpty ? 0 : amp.text) as int?,
+                              (frqn.text.isEmpty ? 0 : frqn.text) as int?,
+                              (voltage.text.isEmpty ? 0 : voltage.text) as int?,
+                              (temp.text.isEmpty ? 0 : temp.text) as int?,
+                              (item.text.isEmpty ? 0 : item.text) as int?,
+                              srno.text,
+                              amount.text,
+                              );
+                        } else {
+                          setState(() {
+                            isDisabled = true;
+                          });
+                        }
+                      })
                 ],
               ),
             ),

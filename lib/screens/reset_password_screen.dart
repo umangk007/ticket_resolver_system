@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_resolver_system/Repository/repository.dart';
-import 'package:ticket_resolver_system/screens/homepage_screen.dart';
-import 'package:ticket_resolver_system/screens/login_screen.dart';
 import 'package:ticket_resolver_system/widgets/constant.dart';
 
 import '../helper/screen_size.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
-import 'package:ticket_resolver_system/screens/reset_password_screen.dart';
 import 'package:ticket_resolver_system/widgets/constant.dart';
 
 class LoginScreen extends StatefulWidget {

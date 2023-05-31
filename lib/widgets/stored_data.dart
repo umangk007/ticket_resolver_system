@@ -7,7 +7,6 @@ class StoredData {
   static const isFirstTimeKey = "is_first";
   static const keyId = "id";
 
-  // static const keyId = "id";
 
   static Future setToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -18,9 +17,9 @@ class StoredData {
     await prefs.setString(userKey, userData);
   }
 
-  static Future setId(int id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(keyId, id);
-  }
+  // static Future setId(int id) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setInt(keyId, id);
+  // }
 
 }

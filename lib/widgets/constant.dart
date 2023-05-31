@@ -95,10 +95,11 @@ class DiscriptiveText extends StatelessWidget {
 class CommenTextfield extends StatefulWidget {
   String? hintText;
   bool? field;
+  String? Function(String?)? validate;
   TextEditingController controller;
 
   CommenTextfield(
-      {super.key, this.hintText, required this.controller, this.field});
+      {super.key, this.hintText, required this.controller, this.field, this.validate});
 
   @override
   State<CommenTextfield> createState() => _CommenTextfieldState();
@@ -135,38 +136,33 @@ class _CommenTextfieldState extends State<CommenTextfield> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      alignment: Alignment.center,
-      height: screenHeight(context, dividedBy: 17),
-      child: TextFormField(
-        enabled: widget.field,
-        controller: widget.controller,
-        decoration: InputDecoration(
-          focusColor: green,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: green),
-              borderRadius: BorderRadius.circular(10)),
-          disabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: green),
-              borderRadius: BorderRadius.circular(10)),
-          contentPadding: const EdgeInsets.only(top: 3, left: 10),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: widget.hintText,
-          hintStyle: const TextStyle(fontWeight: FontWeight.normal),
-          suffixIcon: (usernameEmpty)
-              ? null
-              : IconButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.controller.clear();
-                    });
-                  },
-                  icon: const Icon(Icons.cancel_sharp)),
+    return TextFormField(
+      controller: widget.controller,
+      enabled: widget.field,
+      decoration: InputDecoration(
+        focusColor: green,
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: green),
+            borderRadius: BorderRadius.circular(10)),
+        disabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: green),
+            borderRadius: BorderRadius.circular(10)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
+        hintText: widget.hintText,
+        hintStyle: const TextStyle(fontWeight: FontWeight.normal),
+        suffixIcon: (usernameEmpty)
+          ? null
+          : IconButton(
+          onPressed: () {
+            setState(() {
+              widget.controller.clear();
+            });
+          },
+          icon: const Icon(Icons.cancel_sharp)),
       ),
+      validator: widget.validate,
     );
   }
 }
@@ -174,10 +170,11 @@ class _CommenTextfieldState extends State<CommenTextfield> {
 ////////////////////////////////////////////////////////////////////////////////
 class CommenSmallTextfield extends StatefulWidget {
   String hintText;
+  String? Function(String?)? validate;
   TextEditingController controller;
 
   CommenSmallTextfield(
-      {super.key, required this.hintText, required this.controller});
+      {super.key, required this.hintText, required this.controller, this.validate});
 
   @override
   State<CommenSmallTextfield> createState() => _CommenSmallTextfieldState();
@@ -221,6 +218,7 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
                   },
                   icon: const Icon(Icons.cancel_sharp)),
         ),
+        validator: widget.validate,
       ),
     );
   }
