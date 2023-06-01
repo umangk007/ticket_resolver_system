@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -99,7 +98,7 @@ class Repository {
             ));
       }
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
     }
   }
 
@@ -125,7 +124,7 @@ class Repository {
             TicketModel.fromJson(json.decode(ticketResponse.body));
       }
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
     }
     return response;
   }
@@ -151,7 +150,7 @@ class Repository {
         return response = profileResponse.body;
       }
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
     }
   }
 
@@ -212,7 +211,7 @@ class Repository {
             ));
       }
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
     }
   }
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -11,6 +10,7 @@ import 'package:ticket_resolver_system/helper/screen_size.dart';
 import 'package:ticket_resolver_system/models/ticket_model.dart';
 import 'package:ticket_resolver_system/screens/login_screen.dart';
 import 'package:ticket_resolver_system/screens/report_form_screen.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../widgets/constant.dart';
 import '../widgets/my_drawer.dart';
@@ -61,153 +61,161 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.exit_to_app_sharp))
         ],
       ),
-      body: Container(
-        margin: const EdgeInsets.only(left: 15, right: 5),
-        child: isLoading
-            ? Center(
-          child: hasTicket
-              ? const CircularProgressIndicator()
-              : const Text("No active ticket available.",
-              style: TextStyle(
-                  fontWeight: FontWeight.w500, fontSize: 24)),
-        )
-            : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const BigText(text: "Complain Info"),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 50),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Complain "),
-                DiscriptiveText(
-                    text: activeTicket[0].customComplain ??
-                        activeTicket[0].complain?.complain)
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 80),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Time "),
-                DiscriptiveText(
-                  text: activeTicket[0].time != null
-                      ? DateFormat('MM/dd/yyyy h:mm a')
-                      .format(activeTicket[0].time!.toLocal())
-                      : "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 80),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Assigned by"),
-                DiscriptiveText(
-                  text:
-                  "${activeTicket[0].callRecivedBy?.firstName} ${activeTicket[0]
-                      .callRecivedBy?.lastName}" ??
-                      "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 50),
-            ),
-            const BigText(text: "Party Info"),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 50),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Name"),
-                DiscriptiveText(
-                  text: activeTicket[0].party?.name ?? "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 80),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Phone"),
-                DiscriptiveText(
-                  text: activeTicket[0].party?.mobileNo ?? "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 80),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SmallText(text: "Address"),
-                SizedBox(
-                  // width: screenWidth(context, dividedBy: 1.7),
-                  // height: screenHeight(context, dividedBy: 7.5),
-                  child: DiscriptiveText(
-                    text: activeTicket[0].party?.address ?? "",
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 50),
-            ),
-            const BigText(text: "Party owner Info"),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 50),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Name"),
-                DiscriptiveText(
-                  text: "${activeTicket[0].party
-                      ?.owner["first_name"]} ${activeTicket[0].party
-                      ?.owner["last_name"]}" ?? "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 80),
-            ),
-            Row(
-              children: [
-                const SmallText(text: "Phone"),
-                DiscriptiveText(
-                  text: activeTicket[0].party?.owner["mobile_no"] ?? "",
-                )
-              ],
-            ),
-            SizedBox(
-              height: screenHeight(context, dividedBy: 20),
-            ),
-            CommenButton(
-                text: ticketStatus,
-                onTap: () {
-                  if (ticketStatus == "Start") {
-                    startTicket();
-                  } else if (ticketStatus == "Mark As Complete") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ReportFormScreen(
-                                  partyName: activeTicket[0].party?.name,
-                                  partyId: activeTicket[0]
-                                      .party!
-                                      .id
-                                      .toString(),
-                                  ticketId: activeTicket[0].id.toString(),
-                                )));
-                  }
-                })
-          ],
+      body: UpgradeAlert(
+        upgrader: Upgrader(
+          durationUntilAlertAgain: const Duration(days: 1),
+          canDismissDialog: true,
+          showIgnore: false,
+          shouldPopScope: () => true,
+        ),
+        child: Container(
+          margin: const EdgeInsets.only(left: 15, right: 5),
+          child: isLoading
+              ? Center(
+            child: hasTicket
+                ? const CircularProgressIndicator()
+                : const Text("No active ticket available.",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: 24)),
+          )
+              : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const BigText(text: "Complain Info"),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 50),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Complain "),
+                  DiscriptiveText(
+                      text: activeTicket[0].customComplain ??
+                          activeTicket[0].complain?.complain)
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 80),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Time "),
+                  DiscriptiveText(
+                    text: activeTicket[0].time != null
+                        ? DateFormat('MM/dd/yyyy h:mm a')
+                        .format(activeTicket[0].time!.toLocal())
+                        : "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 80),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Assigned by"),
+                  DiscriptiveText(
+                    text:
+                    "${activeTicket[0].callRecivedBy?.firstName} ${activeTicket[0]
+                        .callRecivedBy?.lastName}" ??
+                        "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 50),
+              ),
+              const BigText(text: "Party Info"),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 50),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Name"),
+                  DiscriptiveText(
+                    text: activeTicket[0].party?.name ?? "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 80),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Phone"),
+                  DiscriptiveText(
+                    text: activeTicket[0].party?.mobileNo ?? "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 80),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SmallText(text: "Address"),
+                  SizedBox(
+                    // width: screenWidth(context, dividedBy: 1.7),
+                    // height: screenHeight(context, dividedBy: 7.5),
+                    child: DiscriptiveText(
+                      text: activeTicket[0].party?.address ?? "",
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 50),
+              ),
+              const BigText(text: "Party owner Info"),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 50),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Name"),
+                  DiscriptiveText(
+                    text: "${activeTicket[0].party
+                        ?.owner["first_name"]} ${activeTicket[0].party
+                        ?.owner["last_name"]}" ?? "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 80),
+              ),
+              Row(
+                children: [
+                  const SmallText(text: "Phone"),
+                  DiscriptiveText(
+                    text: activeTicket[0].party?.owner["mobile_no"] ?? "",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: screenHeight(context, dividedBy: 20),
+              ),
+              CommenButton(
+                  text: ticketStatus,
+                  onTap: () {
+                    if (ticketStatus == "Start") {
+                      startTicket();
+                    } else if (ticketStatus == "Mark As Complete") {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ReportFormScreen(
+                                    partyName: activeTicket[0].party?.name,
+                                    partyId: activeTicket[0]
+                                        .party!
+                                        .id
+                                        .toString(),
+                                    ticketId: activeTicket[0].id.toString(),
+                                  )));
+                    }
+                  })
+            ],
+          ),
         ),
       ),
       drawer: profileLoading
@@ -248,7 +256,6 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
       hasTicket = false;
       ticketStatus = "";
-      log(e.toString());
     }
   }
 
@@ -277,7 +284,7 @@ class _HomePageState extends State<HomePage> {
         });
       }
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
     }
   }
 
@@ -293,7 +300,7 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       profileLoading = true;
-      log(e.toString());
+      // log(e.toString());
     }
   }
 }
