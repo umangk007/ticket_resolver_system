@@ -38,19 +38,29 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkLogin() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedUserJson = prefs.getString(StoredData.userKey);
-    if(storedUserJson != null) {
+    if (storedUserJson != null) {
       var jsonUser = jsonDecode(storedUserJson);
       bool isFirst = jsonUser[StoredData.isFirstTimeKey];
       bool hasToken = prefs.containsKey(StoredData.tokenKey);
-      if(isFirst == false && hasToken == true && context.mounted) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage(),));
-      } else if(isFirst == true && hasToken == true) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ResetPasswordScreen(),));
+      if (isFirst == false && hasToken == true && context.mounted) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ));
+      } else if (isFirst == true && hasToken == true) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ResetPasswordScreen(),
+            ));
       }
-    } else if(context.mounted) {
-     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen(),));
-   }
-
+    } else if (context.mounted) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ));
+    }
   }
-
 }

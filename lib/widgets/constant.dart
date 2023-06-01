@@ -4,7 +4,6 @@ import '../helper/screen_size.dart';
 
 const Color green = Color.fromARGB(255, 43, 173, 101);
 
-////////////////////////////////////////////////////////////////////////////////
 class BigText extends StatelessWidget {
   final String text;
 
@@ -39,7 +38,6 @@ class BigText extends StatelessWidget {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
 class SmallText extends StatelessWidget {
   final String text;
 
@@ -62,7 +60,6 @@ class SmallText extends StatelessWidget {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
 class DiscriptiveText extends StatelessWidget {
   final String text;
   final int maxline;
@@ -91,15 +88,20 @@ class DiscriptiveText extends StatelessWidget {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
 class CommenTextfield extends StatefulWidget {
   String? hintText;
   bool? field;
+  bool? isInt;
   String? Function(String?)? validate;
   TextEditingController controller;
 
   CommenTextfield(
-      {super.key, this.hintText, required this.controller, this.field, this.validate});
+      {super.key,
+      this.hintText,
+      required this.controller,
+      this.field,
+      this.isInt = false,
+      this.validate});
 
   @override
   State<CommenTextfield> createState() => _CommenTextfieldState();
@@ -139,6 +141,11 @@ class _CommenTextfieldState extends State<CommenTextfield> {
     return TextFormField(
       controller: widget.controller,
       enabled: widget.field,
+      keyboardType: widget.isInt!
+          ? const TextInputType.numberWithOptions(
+              decimal: false,
+            )
+          : null,
       decoration: InputDecoration(
         focusColor: green,
         enabledBorder: OutlineInputBorder(
@@ -153,28 +160,32 @@ class _CommenTextfieldState extends State<CommenTextfield> {
         hintText: widget.hintText,
         hintStyle: const TextStyle(fontWeight: FontWeight.normal),
         suffixIcon: (usernameEmpty)
-          ? null
-          : IconButton(
-          onPressed: () {
-            setState(() {
-              widget.controller.clear();
-            });
-          },
-          icon: const Icon(Icons.cancel_sharp)),
+            ? null
+            : IconButton(
+                onPressed: () {
+                  setState(() {
+                    widget.controller.clear();
+                  });
+                },
+                icon: const Icon(Icons.cancel_sharp)),
       ),
       validator: widget.validate,
     );
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
 class CommenSmallTextfield extends StatefulWidget {
   String hintText;
+  bool? isDouble;
   String? Function(String?)? validate;
   TextEditingController controller;
 
   CommenSmallTextfield(
-      {super.key, required this.hintText, required this.controller, this.validate});
+      {super.key,
+      required this.hintText,
+      this.isDouble = true,
+      required this.controller,
+      this.validate});
 
   @override
   State<CommenSmallTextfield> createState() => _CommenSmallTextfieldState();
@@ -192,8 +203,9 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
       width: screenWidth(context, dividedBy: 2.3),
       child: TextFormField(
         controller: widget.controller,
-        keyboardType:
-            const TextInputType.numberWithOptions(signed: true, decimal: true),
+        keyboardType: widget.isDouble!
+            ? const TextInputType.numberWithOptions(signed: true, decimal: true)
+            : null,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(top: 3, left: 10),
           focusColor: green,
@@ -250,7 +262,6 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
 class CommenButton extends StatelessWidget {
   final String text;
   bool isDisabled;
@@ -279,7 +290,7 @@ class CommenButton extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
           ),
-          if (isDisabled)...[
+          if (isDisabled) ...[
             Container(
               height: screenHeight(context, dividedBy: 17),
               width: screenWidth(context, dividedBy: 2),
@@ -291,6 +302,21 @@ class CommenButton extends StatelessWidget {
           ]
         ]),
       ),
+    );
+  }
+}
+
+class RequiredField extends StatelessWidget {
+  const RequiredField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10, bottom: 2),
+      alignment: Alignment.centerRight,
+      child: const Text("Required", style: TextStyle(color: Colors.red)),
     );
   }
 }

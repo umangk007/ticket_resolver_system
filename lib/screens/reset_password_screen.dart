@@ -152,7 +152,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               content: Text('Both the passwords are not same.'),
                               duration: Duration(seconds: 2),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           }
                         } else {
                           setState(() {

@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "Login",
                       isDisabled: isDisabled,
                       onTap: () {
-                        if(formkey.currentState!.validate()) {
+                        if (formkey.currentState!.validate()) {
                           Repository().userLogIn(usernameController.text,
                               passwordController.text, context);
                         } else {

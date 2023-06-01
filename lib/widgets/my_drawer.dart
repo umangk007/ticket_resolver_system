@@ -47,15 +47,18 @@ class _MyDrawerState extends State<MyDrawer> {
                   borderRadius: BorderRadius.circular(100),
                   child: hasProfile
                       ? Image.network(widget.profilePic!)
-                      : const Icon(Icons.person_sharp, size: 50, color: green,)),
+                      : const Icon(
+                          Icons.person_sharp,
+                          size: 50,
+                          color: green,
+                        )),
             ),
             Container(
               margin: const EdgeInsets.only(top: 15),
               alignment: Alignment.center,
-              child: Text(
-                  "${widget.firstName} ${widget.lastName}" ??
-                      "",
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+              child: Text("${widget.firstName} ${widget.lastName}" ?? "",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 25)),
             ),
             const Divider(color: Colors.grey, thickness: 1),
             Container(

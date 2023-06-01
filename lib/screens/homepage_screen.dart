@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
@@ -92,7 +93,10 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const SmallText(text: "Time "),
                       DiscriptiveText(
-                        text: activeTicket[0].time?.toLocal().toString() ?? "",
+                        text: activeTicket[0].time != null
+                            ? DateFormat('MM/dd/yyyy h:mm a')
+                                .format(activeTicket[0].time!.toLocal())
+                            : "",
                       )
                     ],
                   ),
@@ -143,11 +147,37 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const SmallText(text: "Address"),
                       SizedBox(
-                        width: screenWidth(context, dividedBy: 1.7),
-                        height: screenHeight(context, dividedBy: 7.5),
+                        // width: screenWidth(context, dividedBy: 1.7),
+                        // height: screenHeight(context, dividedBy: 7.5),
                         child: DiscriptiveText(
                             text: activeTicket[0].party?.address ?? "",
-                            maxline: 4),
+                            ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight(context, dividedBy: 50),
+                  ),
+                  const BigText(text: "Party owner Info"),
+                  SizedBox(
+                    height: screenHeight(context, dividedBy: 50),
+                  ),
+                  Row(
+                    children: [
+                      const SmallText(text: "Name"),
+                      DiscriptiveText(
+                        text: "${activeTicket[0].party?.owner["first_name"]} ${activeTicket[0].party?.owner["last_name"]}" ?? "",
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight(context, dividedBy: 80),
+                  ),
+                  Row(
+                    children: [
+                      const SmallText(text: "Phone"),
+                      DiscriptiveText(
+                        text: activeTicket[0].party?.owner["mobile_no"] ?? "",
                       )
                     ],
                   ),

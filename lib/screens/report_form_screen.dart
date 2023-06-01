@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -68,7 +67,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CommenTextfield(controller: pN, field: false),
-                  const SizedBox(height: 10),
+                  const RequiredField(),
                   CommenTextfield(
                       hintText: "Mlc type & model",
                       validate: (value) {
@@ -78,8 +77,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                           return null;
                         }
                       },
-                      controller: mlcController),
-                  const SizedBox(height: 10),
+                      controller: mlcController,
+                  ),
+                  const RequiredField(),
                   CommenTextfield(
                     hintText: "Nature of Complaint",
                     validate: (value) {
@@ -91,7 +91,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                     },
                     controller: complaintController,
                   ),
-                  const SizedBox(height: 10),
+                  const RequiredField(),
                   CommenTextfield(
                     hintText: "Action taken",
                     validate: (value) {
@@ -143,6 +143,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                     child: CommenSmallTextfield(
                       hintText: 'Sr no.',
                       controller: srno,
+                      isDouble: false,
                     ),
                   ),
                   const SizedBox(
@@ -152,15 +153,20 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   Container(
                     width: screenWidth(context, dividedBy: 2.2),
                     alignment: Alignment.centerLeft,
-                    // decoration: BoxDecoration(border: Border.all()),
                     child: CommenTextfield(
                       controller: amount,
+                      isInt: true,
                       validate: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter Amount";
-                        } else {
-                          return null;
-                        }
+                       if(value!.isEmpty) {
+                         return null;
+                       } else {
+                         int? intValue = int.tryParse(value);
+                         if(intValue == null) {
+                           return "Please enter valid amount";
+                         } else {
+                           return null;
+                         }
+                       }
                       },
                       hintText: "Amount",
                     ),
@@ -193,7 +199,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                     ),
                   ),
                   CommenButton(
-                      text: "Completed",
+                      text: "Complete",
                       isDisabled: isDisabled,
                       onTap: () {
                         if (formkey.currentState!.validate()) {
@@ -204,14 +210,14 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               mlcController.text,
                               complaintController.text,
                               actionController.text,
-                              (power.text.isEmpty ? 0 : power.text) as int?,
-                              (amp.text.isEmpty ? 0 : amp.text) as int?,
-                              (frqn.text.isEmpty ? 0 : frqn.text) as int?,
-                              (voltage.text.isEmpty ? 0 : voltage.text) as int?,
-                              (temp.text.isEmpty ? 0 : temp.text) as int?,
-                              (item.text.isEmpty ? 0 : item.text) as int?,
-                              srno.text,
-                              amount.text,
+                              (power.text.isEmpty ? 0 : double.parse(power.text)),
+                              (amp.text.isEmpty ? 0 : double.parse(amp.text)),
+                              (frqn.text.isEmpty ? 0 : double.parse(frqn.text)),
+                              (voltage.text.isEmpty ? 0 : double.parse(voltage.text)),
+                              (temp.text.isEmpty ? 0 : double.parse(temp.text)),
+                              (item.text.isEmpty ? 0 : double.parse(item.text)),
+                              srno.text.isEmpty ? "null" : srno.text,
+                              amount.text.isEmpty ? 0 : int.parse(amount.text),
                               );
                         } else {
                           setState(() {
@@ -307,3 +313,5 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     return signature;
   }
 }
+
+

@@ -1,11 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-import 'dart:ffi';
-import 'dart:ffi';
-import 'dart:ffi';
-import 'dart:ffi';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -136,39 +130,6 @@ class Repository {
     return response;
   }
 
-  // Future completeTicket(BuildContext context) async {
-  //   try {
-  //     final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String? storedUserJson = prefs.getString(StoredData.userKey);
-  //     var jsonUser = jsonDecode(storedUserJson!);
-  //     var id = jsonUser[StoredData.keyId];
-  //     var url = "$baseURL/api/complete_ticket/$id/";
-  //     var data = {
-  //       "status": "RESOLVED",
-  //     };
-  //     String? token = prefs.getString(StoredData.tokenKey);
-  //     var body = json.encode(data);
-  //     var urlParse = Uri.parse(url);
-  //     Response response = await http.put(
-  //       urlParse,
-  //       body: body,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //     );
-  //     if (response.statusCode == 200 && context.mounted) {
-  //       Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => ReportFormScreen(),
-  //           ));
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
-
   Future<dynamic> getProfileData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(StoredData.tokenKey);
@@ -196,19 +157,19 @@ class Repository {
 
   Future feedbackForm(
       BuildContext context,
-        String? partyId,
-        String? ticketId,
-        String? machineType,
-        String? natureComplain,
-        String? actionTaken,
-        int? power,
-        int? amp,
-        int? freqn,
-        int? voltage,
-        int? temp,
-        int? item,
+        String partyId,
+        String ticketId,
+        String machineType,
+        String natureComplain,
+        String actionTaken,
+        double? power,
+        double? amp,
+        double? freqn,
+        double? voltage,
+        double? temp,
+        double? item,
         String? srNo,
-        String? amount,) async {
+        int? amount,) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? storedUserJson = prefs.getString(StoredData.userKey);
@@ -254,4 +215,5 @@ class Repository {
       log(e.toString());
     }
   }
+
 }
