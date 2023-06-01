@@ -135,16 +135,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      right: 5,
+                  GestureDetector(
+                    onTap: () {
+                      const SnackBar snackBar = SnackBar(
+                        content: Text("Please contact admin to change your password"),
+                        duration: Duration(seconds: 4),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        right: 5,
+                      ),
+                      alignment: Alignment.centerRight,
+                      child: const Text("Forget password",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: green,
+                          )),
                     ),
-                    alignment: Alignment.centerRight,
-                    child: const Text("Forget password",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: green,
-                        )),
                   ),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 12),

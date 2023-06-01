@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ticket_resolver_system/screens/my_profile_screen.dart';
 import 'package:ticket_resolver_system/widgets/constant.dart';
 
 import '../helper/screen_size.dart';
+import '../screens/login_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   String? profilePic;
   String? firstName;
   String? lastName;
+  String? phone;
+  String? email;
+  String? address;
+  String? city;
+  String? state;
+  String? dateJoined;
 
-  MyDrawer({Key? key, this.profilePic, this.firstName, this.lastName})
+  MyDrawer(
+      {Key? key,
+      this.profilePic,
+      this.firstName,
+      this.lastName,
+      this.phone,
+      this.email,
+      this.address,
+      this.city,
+      this.state,
+      this.dateJoined})
       : super(key: key);
 
   @override
@@ -46,7 +65,7 @@ class _MyDrawerState extends State<MyDrawer> {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: hasProfile
-                      ? Image.network(widget.profilePic!)
+                      ? Image.network(widget.profilePic ?? "")
                       : const Icon(
                           Icons.person_sharp,
                           size: 50,
@@ -61,46 +80,75 @@ class _MyDrawerState extends State<MyDrawer> {
                       fontWeight: FontWeight.bold, fontSize: 25)),
             ),
             const Divider(color: Colors.grey, thickness: 1),
-            Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.all(16),
-              child: const Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Icon(
-                      Icons.person,
-                      color: green,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyProfileScreen(
+                      firstName: widget.firstName,
+                      lastName: widget.lastName,
+                      phone: widget.phone,
+                      email: widget.email,
+                      address: widget.address,
+                      city: widget.city,
+                      state: widget.state,
+                      dateJoined: widget.dateJoined,
                     ),
-                  ),
-                  Text(
-                    'My Profile',
-                    style: TextStyle(
-                      fontSize: 15,
+                  )),
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(16),
+                child: const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Icon(
+                        Icons.person,
+                        color: green,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      'My Profile',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.all(16),
-              child: const Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Icon(
-                      Icons.exit_to_app_sharp,
-                      color: green,
+            GestureDetector(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ));
+                  await prefs.clear();
+                }
+              },
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(16),
+                child: const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Icon(
+                        Icons.exit_to_app_sharp,
+                        color: green,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontSize: 15,
+                    Text(
+                      'Logout',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const Expanded(child: SizedBox()),
