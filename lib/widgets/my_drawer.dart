@@ -35,15 +35,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  late bool hasProfile;
-
   @override
   void initState() {
-    if (widget.profilePic == null) {
-      hasProfile = true;
-    } else {
-      hasProfile = false;
-    }
     super.initState();
   }
 
@@ -62,15 +55,17 @@ class _MyDrawerState extends State<MyDrawer> {
               alignment: Alignment.center,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, border: Border.all()),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: hasProfile
-                      ? Image.network(widget.profilePic ?? "")
-                      : const Icon(
-                          Icons.person_sharp,
-                          size: 50,
-                          color: green,
-                        )),
+              child: widget.profilePic != "null"
+                  ? ClipOval(
+                      child: CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(widget.profilePic!),
+                    ))
+                  : const Icon(
+                      Icons.person_sharp,
+                      size: 50,
+                      color: Colors.green,
+                    ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 15),
@@ -85,6 +80,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyProfileScreen(
+                      profilePic: widget.profilePic,
                       firstName: widget.firstName,
                       lastName: widget.lastName,
                       phone: widget.phone,
@@ -109,10 +105,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     Text(
                       'My Profile',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -144,10 +138,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     Text(
                       'Logout',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

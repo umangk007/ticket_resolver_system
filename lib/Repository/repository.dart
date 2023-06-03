@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +13,7 @@ import '../screens/reset_password_screen.dart';
 import '../widgets/stored_data.dart';
 
 class Repository {
-  static const baseURL =
-      "https://ticket-resolver-api.flyontech.com";
+  static const baseURL = "https://ticket-resolver-api.flyontech.com";
   static const endPoint = "&status__in=ALLOCATION_COMPLETE,ONSITE";
 
   Future userLogIn(
@@ -157,19 +157,20 @@ class Repository {
 
   Future feedbackForm(
       BuildContext context,
-        String partyId,
-        String ticketId,
-        String machineType,
-        String natureComplain,
-        String actionTaken,
-        double? power,
-        double? amp,
-        double? freqn,
-        double? voltage,
-        double? temp,
-        double? item,
-        String? srNo,
-        int? amount,) async {
+      String partyId,
+      String ticketId,
+      String machineType,
+      String natureComplain,
+      String actionTaken,
+      double? power,
+      double? amp,
+      double? freqn,
+      double? voltage,
+      double? temp,
+      double? item,
+      String? srNo,
+      int? amount,
+      String? signature) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? storedUserJson = prefs.getString(StoredData.userKey);
@@ -191,7 +192,7 @@ class Repository {
         "sr_no": srNo,
         "amount": amount,
         "engineer_id": "$id",
-        "customer_signature": "signature"
+        "customer_signature": "$signature"
       };
       String? token = prefs.getString(StoredData.tokenKey);
       var body = json.encode(data);
@@ -216,31 +217,32 @@ class Repository {
     }
   }
 
-  Future feedbackPost(Image image) async{
+  Future<String?> feedbackPost(File file) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = "$baseURL/api/upload_image/";
-      var data = {
-        "image_type" : "signature",
-        "image" : image
-      };
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
       String? token = prefs.getString(StoredData.tokenKey);
-      var body = json.encode(data);
-      var urlParse = Uri.parse(url);
-      Response response = await http.post(
-        urlParse,
-        body: body,
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer $token',
-        },
-      );
-      if(response.statusCode == 200) {
-        print(response.body);
+      request.headers['Authorization'] = 'Bearer $token';
+
+      var fileStream = http.ByteStream(file.openRead());
+      var fileLength = await file.length();
+      var multipartFile = http.MultipartFile('image', fileStream, fileLength,
+          filename: file.path);
+
+      request.files.add(multipartFile);
+      request.fields['image_type'] = 'signature';
+      var response = await request.send();
+      String responseBody = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var body = json.decode(responseBody);
+        return body['image_url'];
+      } else {
+        return '';
       }
     } catch (e) {
       log(e.toString());
     }
   }
-
 }

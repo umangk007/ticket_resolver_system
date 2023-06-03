@@ -5,6 +5,7 @@ import '../helper/screen_size.dart';
 import '../widgets/constant.dart';
 
 class MyProfileScreen extends StatefulWidget {
+  String? profilePic;
   String? firstName;
   String? lastName;
   String? phone;
@@ -16,6 +17,7 @@ class MyProfileScreen extends StatefulWidget {
 
   MyProfileScreen(
       {Key? key,
+      this.profilePic,
       this.firstName,
       this.lastName,
       this.phone,
@@ -49,13 +51,17 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               alignment: Alignment.center,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, border: Border.all()),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: const Icon(
-                    Icons.person_sharp,
-                    size: 50,
-                    color: green,
-                  )),
+              child: widget.profilePic != "null"
+                  ? ClipOval(
+                      child: CircleAvatar(
+                      radius: 65.0,
+                      backgroundImage: NetworkImage(widget.profilePic!),
+                    ))
+                  : const Icon(
+                      Icons.person_sharp,
+                      size: 50,
+                      color: green,
+                    ),
             ),
             SizedBox(
               height: screenHeight(context, dividedBy: 50),
@@ -71,7 +77,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,7 +91,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,7 +105,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,7 +119,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -119,7 +133,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -131,15 +147,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Date joined"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.dateJoined != null ? DateFormat('MM/dd/yyyy h:mm a')
-                        .format(DateTime.tryParse(widget.dateJoined!)!.toLocal())
+                    text: widget.dateJoined != null
+                        ? DateFormat('MM/dd/yyyy h:mm a').format(
+                            DateTime.tryParse(widget.dateJoined!)!.toLocal())
                         : "",
                   ),
                 )

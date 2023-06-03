@@ -54,12 +54,11 @@ class _HomePageState extends State<HomePage> {
         ),
         child: RefreshIndicator(
           onRefresh: () async {
-             onRefresh();
+            onRefresh();
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Stack(
-                children: [
+            child: Stack(children: [
               Container(
                 height: screenHeight(context),
                 margin: const EdgeInsets.only(left: 15, right: 5),
@@ -72,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                             ? LoadingPage()
                             : const Text("No active ticket available.",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 24)),
+                                    fontWeight: FontWeight.w300, fontSize: 20)),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,8 +86,8 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Complain "),
                               Expanded(
                                 child: DiscriptiveText(
-                                    text: activeTicket[0].customComplain ??
-                                        activeTicket[0].complain?.complain),
+                                    text: activeTicket[0].complain?.complain ??
+                                        activeTicket[0].customComplain),
                               )
                             ],
                           ),
@@ -102,8 +101,8 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 child: DiscriptiveText(
                                   text: activeTicket[0].time != null
-                                      ? DateFormat('MM/dd/yyyy h:mm a')
-                                          .format(activeTicket[0].time!.toLocal())
+                                      ? DateFormat('MM/dd/yyyy h:mm a').format(
+                                          activeTicket[0].time!.toLocal())
                                       : "",
                                 ),
                               )
@@ -200,9 +199,10 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Phone"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text:
-                                      activeTicket[0].party?.owner["mobile_no"] ??
-                                          "",
+                                  text: activeTicket[0]
+                                          .party
+                                          ?.owner["mobile_no"] ??
+                                      "",
                                 ),
                               )
                             ],

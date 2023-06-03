@@ -42,6 +42,8 @@ dependencies:
   upgrader: ^7.0.1
   google_fonts: ^4.0.4
   flutter_image_compress: ^2.0.3
+  permission_handler: ^10.2.0
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:
