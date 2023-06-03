@@ -1,4 +1,7 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
@@ -201,24 +204,26 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   CommenButton(
                       text: "Complete",
                       isDisabled: isDisabled,
-                      onTap: () {
+                      onTap: () async {
                         if (formkey.currentState!.validate()) {
-                          Repository().feedbackForm(
-                              context,
-                              widget.partyId,
-                              widget.ticketId,
-                              mlcController.text,
-                              complaintController.text,
-                              actionController.text,
-                              (power.text.isEmpty ? 0 : double.parse(power.text)),
-                              (amp.text.isEmpty ? 0 : double.parse(amp.text)),
-                              (frqn.text.isEmpty ? 0 : double.parse(frqn.text)),
-                              (voltage.text.isEmpty ? 0 : double.parse(voltage.text)),
-                              (temp.text.isEmpty ? 0 : double.parse(temp.text)),
-                              (item.text.isEmpty ? 0 : double.parse(item.text)),
-                              srno.text.isEmpty ? "null" : srno.text,
-                              amount.text.isEmpty ? 0 : int.parse(amount.text),
-                              );
+                          final image = await exportSignatureImage();
+                          Repository().feedbackPost(image);
+                          // Repository().feedbackForm(
+                          //     context,
+                          //     widget.partyId,
+                          //     widget.ticketId,
+                          //     mlcController.text,
+                          //     complaintController.text,
+                          //     actionController.text,
+                          //     (power.text.isEmpty ? 0 : double.parse(power.text)),
+                          //     (amp.text.isEmpty ? 0 : double.parse(amp.text)),
+                          //     (frqn.text.isEmpty ? 0 : double.parse(frqn.text)),
+                          //     (voltage.text.isEmpty ? 0 : double.parse(voltage.text)),
+                          //     (temp.text.isEmpty ? 0 : double.parse(temp.text)),
+                          //     (item.text.isEmpty ? 0 : double.parse(item.text)),
+                          //     srno.text.isEmpty ? "null" : srno.text,
+                          //     amount.text.isEmpty ? 0 : int.parse(amount.text),
+                          //     );
                         } else {
                           setState(() {
                             isDisabled = true;
@@ -312,6 +317,20 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     exportController.dispose();
     return signature;
   }
+
+  Future exportSignatureImage() async {
+    final exportController = SignatureController(
+        penStrokeWidth: 3,
+        penColor: Colors.black,
+        exportBackgroundColor: Colors.white,
+        points: signController.points);
+
+    final signature = await exportController.toPngBytes();
+    // final file = File();
+    // exportController.dispose();
+    // return completer.future;
+  }
+
 }
 
 

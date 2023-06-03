@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ import '../widgets/stored_data.dart';
 
 class Repository {
   static const baseURL =
-      "http://ticket-resolver-flyontech-env.eba-jzpfeppv.us-east-2.elasticbeanstalk.com";
+      "https://ticket-resolver-api.flyontech.com";
   static const endPoint = "&status__in=ALLOCATION_COMPLETE,ONSITE";
 
   Future userLogIn(
@@ -70,7 +71,7 @@ class Repository {
 
   Future resetPassword(String password, BuildContext context) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = "$baseURL/auth/reset_password/";
       var data = {
         "password": password,
@@ -212,6 +213,33 @@ class Repository {
       }
     } catch (e) {
       // log(e.toString());
+    }
+  }
+
+  Future feedbackPost(Image image) async{
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var url = "$baseURL/api/upload_image/";
+      var data = {
+        "image_type" : "signature",
+        "image" : image
+      };
+      String? token = prefs.getString(StoredData.tokenKey);
+      var body = json.encode(data);
+      var urlParse = Uri.parse(url);
+      Response response = await http.post(
+        urlParse,
+        body: body,
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if(response.statusCode == 200) {
+        print(response.body);
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 

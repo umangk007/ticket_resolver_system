@@ -57,7 +57,7 @@ class _MyDrawerState extends State<MyDrawer> {
           children: <Widget>[
             Container(
               width: screenWidth(context),
-              height: screenHeight(context, dividedBy: 6),
+              height: screenHeight(context, dividedBy: 8),
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
               decoration:
@@ -77,7 +77,7 @@ class _MyDrawerState extends State<MyDrawer> {
               alignment: Alignment.center,
               child: Text("${widget.firstName} ${widget.lastName}" ?? "",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 25)),
+                      fontWeight: FontWeight.bold, fontSize: 18)),
             ),
             const Divider(color: Colors.grey, thickness: 1),
             GestureDetector(
@@ -111,6 +111,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       'My Profile',
                       style: TextStyle(
                         fontSize: 15,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ],
@@ -145,6 +146,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       'Logout',
                       style: TextStyle(
                         fontSize: 15,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ],
