@@ -141,19 +141,28 @@ class _CommenTextfieldState extends State<CommenTextfield> {
               decimal: false,
             )
           : null,
+      style: const TextStyle(
+        fontSize: 12,
+      ),
       decoration: InputDecoration(
         focusColor: green,
+        contentPadding:
+        const EdgeInsets.only(top: 15, left: 15),
         enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: green),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(8)),
         disabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: green),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(8)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
         ),
         hintText: widget.hintText,
-        hintStyle: const TextStyle(fontWeight: FontWeight.normal),
+        hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 12,
+        ),
+        errorStyle: const TextStyle(fontSize: 0.01),
         suffixIcon: (usernameEmpty)
             ? null
             : IconButton(
@@ -201,20 +210,28 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
         keyboardType: widget.isDouble!
             ? const TextInputType.numberWithOptions(signed: true, decimal: true)
             : null,
+        style: const TextStyle(
+          fontSize: 12,
+        ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(top: 3, left: 10),
           focusColor: green,
+          contentPadding:
+          const EdgeInsets.only(top: 15, left: 15),
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: green),
-              borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(8)),
           disabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: green),
-              borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(8)),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
           ),
           hintText: widget.hintText,
-          hintStyle: const TextStyle(fontWeight: FontWeight.normal),
+          hintStyle: const TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 12,
+          ),
+          errorStyle: const TextStyle(fontSize: 0.01),
           suffixIcon: (usernameEmpty)
               ? null
               : IconButton(

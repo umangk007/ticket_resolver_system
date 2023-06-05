@@ -53,26 +53,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const Text("Mobile No",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500)),
+                            fontSize: 15, fontWeight: FontWeight.w500)),
                     const SizedBox(
-                      height: 5,
+                      height: 3,
                     ),
                     TextFormField(
                       controller: usernameController,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                       decoration: InputDecoration(
                         focusColor: green,
+                        contentPadding:
+                            const EdgeInsets.only(top: 15, left: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(08)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        // border: InputBorder.none,
                         hintText: "Enter your Mobile no",
-                        hintStyle:
-                            const TextStyle(fontWeight: FontWeight.normal),
+                        hintStyle: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                        errorStyle: const TextStyle(fontSize: 0.01),
                         suffixIcon: (usernameEmpty)
                             ? const Icon(Icons.person_sharp)
                             : IconButton(
@@ -85,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter Mobile no";
+                          return "";
                         } else {
                           return null;
                         }
@@ -96,27 +105,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const Text("Password",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500)),
+                            fontSize: 15, fontWeight: FontWeight.w500)),
                     const SizedBox(
-                      height: 5,
+                      height: 3,
                     ),
                     TextFormField(
                       controller: passwordController,
                       obscureText: !showPassword,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                       decoration: InputDecoration(
                         focusColor: green,
+                        contentPadding:
+                            const EdgeInsets.only(top: 15, left: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(08)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         hintText: "Enter your Password",
-                        hintStyle:
-                            const TextStyle(fontWeight: FontWeight.normal),
+                        hintStyle: const TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 12),
+                        errorStyle: const TextStyle(fontSize: 0.01),
                         suffixIcon: (showPassword)
                             ? IconButton(
                                 onPressed: () {
@@ -174,8 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isLoading = true;
                             });
-                            Repository().userLogIn(usernameController.text,
-                                passwordController.text, context);
+                            Repository().userLogIn(usernameController.text.trim(),
+                                passwordController.text.trim(), context);
                             Timer(const Duration(seconds: 1), () {
                               setState(() {
                                 isLoading = false;

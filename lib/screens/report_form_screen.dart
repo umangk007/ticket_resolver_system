@@ -79,7 +79,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       hintText: "Mlc type & model",
                       validate: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter Machine type";
+                          return "";
                         } else {
                           return null;
                         }
@@ -91,7 +91,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       hintText: "Nature of Complaint",
                       validate: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter Nature of complain";
+                          return "";
                         } else {
                           return null;
                         }
@@ -103,7 +103,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       hintText: "Action taken",
                       validate: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter Action taken";
+                          return "";
                         } else {
                           return null;
                         }

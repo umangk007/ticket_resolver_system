@@ -46,7 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     const Text("New Password",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
                         )),
                     const SizedBox(
@@ -54,19 +54,29 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     TextFormField(
                       controller: newpassController,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                       obscureText: !showNewPassword,
                       decoration: InputDecoration(
                         focusColor: green,
+                        contentPadding:
+                        const EdgeInsets.only(top: 15, left: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         hintText: "Enter new password",
+                        hintStyle: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                        errorStyle: const TextStyle(fontSize: 0.01),
                         suffixIcon: (showNewPassword)
                             ? IconButton(
                                 onPressed: () {
@@ -86,7 +96,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter password";
+                          return "";
                         } else {
                           return null;
                         }
@@ -97,25 +107,35 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     const Text("Repeat Password",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500)),
+                            fontSize: 15, fontWeight: FontWeight.w500)),
                     const SizedBox(
                       height: 5,
                     ),
                     TextFormField(
                       controller: repeatpassController,
                       obscureText: !showRepeatPassword,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                       decoration: InputDecoration(
                         focusColor: green,
+                        contentPadding:
+                        const EdgeInsets.only(top: 15, left: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: green),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         hintText: "Enter new password again",
+                        hintStyle: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                        errorStyle: const TextStyle(fontSize: 0.01),
                         suffixIcon: (showRepeatPassword)
                             ? IconButton(
                                 onPressed: () {
@@ -135,7 +155,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter password";
+                          return "";
                         } else {
                           return null;
                         }
@@ -149,13 +169,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         isDisabled: isDisabled,
                         onTap: () {
                           if (formkey.currentState!.validate()) {
-                            if (newpassController.text ==
-                                repeatpassController.text) {
+                            if (newpassController.text.trim() ==
+                                repeatpassController.text.trim()) {
                               setState(() {
                                 isLoading = true;
                               });
                               Repository().resetPassword(
-                                  newpassController.text, context);
+                                  newpassController.text.trim(), context);
                               Timer(const Duration(seconds: 1), () {
                                 setState(() {
                                   isLoading = false;
