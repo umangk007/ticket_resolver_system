@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../helper/screen_size.dart';
@@ -18,7 +19,9 @@ class BigText extends StatelessWidget {
       children: [
         Text(text,
             style: const TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 20, color: green)),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Color.fromARGB(255, 42, 174, 101))),
         Expanded(
           child: Container(
             height: 20,
@@ -52,9 +55,9 @@ class SmallText extends StatelessWidget {
           children: [
             Text(text,
                 style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
             const Text(":",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
           ],
         ));
   }
@@ -62,26 +65,21 @@ class SmallText extends StatelessWidget {
 
 class DiscriptiveText extends StatelessWidget {
   final String text;
-  final int maxline;
 
   const DiscriptiveText({
     super.key,
     required this.text,
-    this.maxline = 1,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: const EdgeInsets.only(left: 10),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black87.withOpacity(0.7),
-          ),
-          maxLines: maxline,
+    return Container(
+      margin: const EdgeInsets.only(left: 10),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w300
         ),
       ),
     );
@@ -281,14 +279,15 @@ class CommenButton extends StatelessWidget {
         onTap: onTap,
         child: Stack(children: [
           Container(
-            height: screenHeight(context, dividedBy: 17),
+            height: 50,
             width: screenWidth(context, dividedBy: 2),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30), color: green),
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromARGB(255, 42, 174, 101)),
             child: Text(text,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                    const TextStyle(fontWeight: FontWeight.bold)),
           ),
           if (isDisabled) ...[
             Container(
@@ -317,6 +316,22 @@ class RequiredField extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10, bottom: 2),
       alignment: Alignment.centerRight,
       child: const Text("Required", style: TextStyle(color: Colors.red)),
+    );
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.8),
+        ),
+        child: const CupertinoActivityIndicator(),
+      ),
     );
   }
 }

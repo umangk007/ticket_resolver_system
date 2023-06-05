@@ -35,15 +35,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  late bool hasProfile;
-
   @override
   void initState() {
-    if (widget.profilePic == null) {
-      hasProfile = true;
-    } else {
-      hasProfile = false;
-    }
     super.initState();
   }
 
@@ -57,27 +50,29 @@ class _MyDrawerState extends State<MyDrawer> {
           children: <Widget>[
             Container(
               width: screenWidth(context),
-              height: screenHeight(context, dividedBy: 6),
+              height: screenHeight(context, dividedBy: 8),
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, border: Border.all()),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: hasProfile
-                      ? Image.network(widget.profilePic ?? "")
-                      : const Icon(
-                          Icons.person_sharp,
-                          size: 50,
-                          color: green,
-                        )),
+              child: widget.profilePic != "null"
+                  ? ClipOval(
+                      child: CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(widget.profilePic!),
+                    ))
+                  : const Icon(
+                      Icons.person_sharp,
+                      size: 50,
+                      color: Colors.green,
+                    ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 15),
               alignment: Alignment.center,
               child: Text("${widget.firstName} ${widget.lastName}" ?? "",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 25)),
+                      fontWeight: FontWeight.bold, fontSize: 18)),
             ),
             const Divider(color: Colors.grey, thickness: 1),
             GestureDetector(
@@ -85,6 +80,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyProfileScreen(
+                      profilePic: widget.profilePic,
                       firstName: widget.firstName,
                       lastName: widget.lastName,
                       phone: widget.phone,
@@ -109,9 +105,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     Text(
                       'My Profile',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -143,9 +138,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     Text(
                       'Logout',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

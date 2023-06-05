@@ -5,6 +5,7 @@ import '../helper/screen_size.dart';
 import '../widgets/constant.dart';
 
 class MyProfileScreen extends StatefulWidget {
+  String? profilePic;
   String? firstName;
   String? lastName;
   String? phone;
@@ -16,6 +17,7 @@ class MyProfileScreen extends StatefulWidget {
 
   MyProfileScreen(
       {Key? key,
+      this.profilePic,
       this.firstName,
       this.lastName,
       this.phone,
@@ -36,9 +38,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("User Profile"),
+        centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.only(left: 10, right: 10),
+        margin: const EdgeInsets.only(left: 15, right: 15),
         child: Column(
           children: [
             Container(
@@ -48,72 +51,116 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               alignment: Alignment.center,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, border: Border.all()),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: const Icon(
-                    Icons.person_sharp,
-                    size: 50,
-                    color: green,
-                  )),
+              child: widget.profilePic != "null"
+                  ? ClipOval(
+                      child: CircleAvatar(
+                      radius: 65.0,
+                      backgroundImage: NetworkImage(widget.profilePic!),
+                    ))
+                  : const Icon(
+                      Icons.person_sharp,
+                      size: 50,
+                      color: green,
+                    ),
             ),
             SizedBox(
               height: screenHeight(context, dividedBy: 50),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Name"),
-                DiscriptiveText(
-                  text: "${widget.firstName} ${widget.lastName}" ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: "${widget.firstName} ${widget.lastName}" ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Phone"),
-                DiscriptiveText(
-                  text: widget.phone ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.phone ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Email"),
-                DiscriptiveText(
-                  text: widget.email ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.email ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Address"),
-                DiscriptiveText(
-                  text: widget.address ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.address ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "City"),
-                DiscriptiveText(
-                  text: widget.city ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.city ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "State"),
-                DiscriptiveText(
-                  text: widget.state ?? "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.state ?? "",
+                  ),
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SmallText(text: "Date joined"),
-                DiscriptiveText(
-                  text: widget.dateJoined != null ? DateFormat('MM/dd/yyyy h:mm a')
-                      .format(DateTime.tryParse(widget.dateJoined!)!.toLocal())
-                      : "",
+                Expanded(
+                  child: DiscriptiveText(
+                    text: widget.dateJoined != null
+                        ? DateFormat('MM/dd/yyyy h:mm a').format(
+                            DateTime.tryParse(widget.dateJoined!)!.toLocal())
+                        : "",
+                  ),
                 )
               ],
             ),

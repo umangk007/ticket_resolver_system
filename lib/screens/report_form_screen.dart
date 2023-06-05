@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:ffi';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:signature/signature.dart';
 import 'package:ticket_resolver_system/Repository/repository.dart';
 import 'package:ticket_resolver_system/helper/screen_size.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../widgets/constant.dart';
 
@@ -25,6 +30,8 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
   Uint8List? sign;
   bool isDisabled = false;
   bool showSignaturepad = false;
+  String directoryName = 'Signature';
+  String? uploadedImageUrl = '';
   final formkey = GlobalKey<FormState>();
   late SignatureController signController;
   late TextEditingController pN;
@@ -53,8 +60,8 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Report form",
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22)),
+        title: const Text("Report form"),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -69,15 +76,15 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   CommenTextfield(controller: pN, field: false),
                   const RequiredField(),
                   CommenTextfield(
-                      hintText: "Mlc type & model",
-                      validate: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter Machine type";
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: mlcController,
+                    hintText: "Mlc type & model",
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter Machine type";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: mlcController,
                   ),
                   const RequiredField(),
                   CommenTextfield(
@@ -157,16 +164,16 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       controller: amount,
                       isInt: true,
                       validate: (value) {
-                       if(value!.isEmpty) {
-                         return null;
-                       } else {
-                         int? intValue = int.tryParse(value);
-                         if(intValue == null) {
-                           return "Please enter valid amount";
-                         } else {
-                           return null;
-                         }
-                       }
+                        if (value!.isEmpty) {
+                          return null;
+                        } else {
+                          int? intValue = int.tryParse(value);
+                          if (intValue == null) {
+                            return "Please enter valid amount";
+                          } else {
+                            return null;
+                          }
+                        }
                       },
                       hintText: "Amount",
                     ),
@@ -201,8 +208,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   CommenButton(
                       text: "Complete",
                       isDisabled: isDisabled,
-                      onTap: () {
+                      onTap: () async {
                         if (formkey.currentState!.validate()) {
+                          await saveImageToMobile();
                           Repository().feedbackForm(
                               context,
                               widget.partyId,
@@ -210,15 +218,19 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               mlcController.text,
                               complaintController.text,
                               actionController.text,
-                              (power.text.isEmpty ? 0 : double.parse(power.text)),
+                              (power.text.isEmpty
+                                  ? 0
+                                  : double.parse(power.text)),
                               (amp.text.isEmpty ? 0 : double.parse(amp.text)),
                               (frqn.text.isEmpty ? 0 : double.parse(frqn.text)),
-                              (voltage.text.isEmpty ? 0 : double.parse(voltage.text)),
+                              (voltage.text.isEmpty
+                                  ? 0
+                                  : double.parse(voltage.text)),
                               (temp.text.isEmpty ? 0 : double.parse(temp.text)),
                               (item.text.isEmpty ? 0 : double.parse(item.text)),
                               srno.text.isEmpty ? "null" : srno.text,
                               amount.text.isEmpty ? 0 : int.parse(amount.text),
-                              );
+                              uploadedImageUrl);
                         } else {
                           setState(() {
                             isDisabled = true;
@@ -312,6 +324,36 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     exportController.dispose();
     return signature;
   }
+
+  requestStoragePermission() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      print("Permission Granted!!");
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      if (await Permission.storage.request().isGranted) {
+        print("Permission Granted!!");
+      }
+    }
+  }
+
+  String formattedDate() {
+    DateTime dateTime = DateTime.now();
+    String dateTimeString =
+        'Signature_${dateTime.year}${dateTime.month}${dateTime.day}${dateTime.hour}:${dateTime.minute}:${dateTime.second}:${dateTime.millisecond}:${dateTime.microsecond}';
+    return dateTimeString;
+  }
+
+  saveImageToMobile() async {
+    await requestStoragePermission();
+    Directory? directory = await getApplicationDocumentsDirectory();
+    String? path = directory?.path;
+    var filePath = '$path/$directoryName/${formattedDate()}.png';
+    await Directory('$path/$directoryName').create(recursive: true);
+    File(filePath).writeAsBytesSync(sign!.buffer.asInt8List());
+    File file = File(filePath);
+    var imageUrl = await Repository().feedbackPost(file);
+    setState(() {
+      uploadedImageUrl = imageUrl;
+    });
+  }
 }
-
-
