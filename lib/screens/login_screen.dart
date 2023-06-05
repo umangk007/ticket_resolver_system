@@ -184,18 +184,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     CommenButton(
                         text: "Login",
                         isDisabled: isDisabled,
-                        onTap: () {
+                        onTap: () async{
                           if (formkey.currentState!.validate()) {
                             setState(() {
                               isLoading = true;
                             });
-                            Repository().userLogIn(usernameController.text.trim(),
+                          await Repository().userLogIn(usernameController.text.trim(),
                                 passwordController.text.trim(), context);
-                            Timer(const Duration(seconds: 1), () {
                               setState(() {
                                 isLoading = false;
                               });
-                            });
                           } else {
                             setState(() {
                               isDisabled = true;

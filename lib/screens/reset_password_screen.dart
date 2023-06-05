@@ -167,20 +167,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     CommenButton(
                         text: "Reset",
                         isDisabled: isDisabled,
-                        onTap: () {
+                        onTap: () async{
                           if (formkey.currentState!.validate()) {
                             if (newpassController.text.trim() ==
                                 repeatpassController.text.trim()) {
                               setState(() {
                                 isLoading = true;
                               });
-                              Repository().resetPassword(
+                             await Repository().resetPassword(
                                   newpassController.text.trim(), context);
-                              Timer(const Duration(seconds: 1), () {
                                 setState(() {
                                   isLoading = false;
                                 });
-                              });
                             } else {
                               const SnackBar snackBar = SnackBar(
                                 content:

@@ -45,23 +45,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         child: Column(
           children: [
             Container(
-              width: screenWidth(context),
-              height: screenHeight(context, dividedBy: 6),
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, border: Border.all()),
               child: widget.profilePic != "null"
-                  ? ClipOval(
-                      child: CircleAvatar(
-                      radius: 65.0,
-                      backgroundImage: NetworkImage(widget.profilePic!),
-                    ))
+                  ? CircleAvatar(
+                radius: 70,
+                backgroundImage: NetworkImage(widget.profilePic!),
+              )
                   : const Icon(
-                      Icons.person_sharp,
-                      size: 50,
-                      color: green,
-                    ),
+                Icons.person_sharp,
+                size: 50,
+                color: Colors.green,
+              ),
             ),
             SizedBox(
               height: screenHeight(context, dividedBy: 50),

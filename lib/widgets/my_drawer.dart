@@ -49,18 +49,13 @@ class _MyDrawerState extends State<MyDrawer> {
         child: Column(
           children: <Widget>[
             Container(
-              width: screenWidth(context),
-              height: screenHeight(context, dividedBy: 8),
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, border: Border.all()),
               child: widget.profilePic != "null"
-                  ? ClipOval(
-                      child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(widget.profilePic!),
-                    ))
+                  ? CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(widget.profilePic!),
+              )
                   : const Icon(
                       Icons.person_sharp,
                       size: 50,

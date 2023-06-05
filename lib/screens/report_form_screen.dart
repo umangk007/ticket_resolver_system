@@ -192,7 +192,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               });
                               await saveImageToMobile();
                               // ignore: use_build_context_synchronously
-                              Repository().feedbackForm(
+                            await Repository().feedbackForm(
                                   context,
                                   widget.partyId,
                                   widget.ticketId,
@@ -219,11 +219,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                                       : double.parse(item.text)),
                                   srno.text.isEmpty ? "null" : srno.text,
                                   uploadedImageUrl);
-                              Timer(const Duration(seconds: 2), () {
                                 setState(() {
                                   isLoading = false;
                                 });
-                              });
                             } else {
                               const SnackBar snackBar = SnackBar(
                                 content: Text('Please add Signature.'),
@@ -231,6 +229,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
+                              setState(() {
+                                isDisabled = true;
+                              });
                             }
                           } else {
                             setState(() {
