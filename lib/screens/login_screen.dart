@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           right: 5,
                         ),
                         alignment: Alignment.centerRight,
-                        child: const Text("Forget password",
+                        child: const Text("Forget password ?",
                             style: TextStyle(
                               fontSize: 15,
                               color: green,
@@ -193,9 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        isLoading
-            ? LoadingPage()
-            : const SizedBox()
+        isLoading ? LoadingPage() : const SizedBox()
       ]),
     );
   }

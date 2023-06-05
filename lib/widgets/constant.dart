@@ -77,10 +77,7 @@ class DiscriptiveText extends StatelessWidget {
       margin: const EdgeInsets.only(left: 10),
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w300
-        ),
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
       ),
     );
   }
@@ -285,9 +282,8 @@ class CommenButton extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: const Color.fromARGB(255, 42, 174, 101)),
-            child: Text(text,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold)),
+            child:
+                Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           if (isDisabled) ...[
             Container(

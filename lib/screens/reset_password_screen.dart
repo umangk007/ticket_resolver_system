@@ -182,9 +182,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ),
           ),
         ),
-        isLoading
-            ? LoadingPage()
-            : const SizedBox()
+        isLoading ? LoadingPage() : const SizedBox()
       ]),
     );
   }

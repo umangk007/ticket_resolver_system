@@ -99,7 +99,7 @@ class Repository {
             ));
       }
     } catch (e) {
-      // log(e.toString());
+      log(e.toString());
     }
   }
 
@@ -125,7 +125,7 @@ class Repository {
             TicketModel.fromJson(json.decode(ticketResponse.body));
       }
     } catch (e) {
-      // log(e.toString());
+      log(e.toString());
     }
     return response;
   }
@@ -169,7 +169,6 @@ class Repository {
       double? temp,
       double? item,
       String? srNo,
-      int? amount,
       String? signature) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -190,7 +189,6 @@ class Repository {
         "temperature": temp,
         "item": item,
         "sr_no": srNo,
-        "amount": amount,
         "engineer_id": "$id",
         "customer_signature": "$signature"
       };
@@ -213,7 +211,7 @@ class Repository {
             ));
       }
     } catch (e) {
-      // log(e.toString());
+      log(e.toString());
     }
   }
 

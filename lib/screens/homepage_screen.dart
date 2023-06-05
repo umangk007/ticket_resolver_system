@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
   late bool hasTicket;
   late bool profileLoading;
   late String ticketStatus;
-  static const baseURL = "https://ticket-resolver-api.flyontech.com";
 
   @override
   void initState() {
@@ -275,13 +274,11 @@ class _HomePageState extends State<HomePage> {
         } else {
           ticketStatus = "";
         }
-        setState(() {});
       }
     } catch (e) {
       isLoading = true;
       hasTicket = false;
       ticketStatus = "";
-      setState(() {});
     }
   }
 
@@ -293,7 +290,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var id = activeTicket[0].id;
-      var url = "$baseURL/api/start_ticket/$id/";
+      var url = "${Repository.baseURL}/api/start_ticket/$id/";
       var data = {
         "status": "ONSITE",
       };
@@ -336,7 +333,7 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       profileLoading = true;
-      // log(e.toString());
+      //log(e.toString());
     }
   }
 
