@@ -85,8 +85,8 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Complain "),
                               Expanded(
                                 child: DiscriptiveText(
-                                    text: activeTicket[0].complain?.complain ??
-                                        activeTicket[0].customComplain),
+                                    text:
+                                         activeTicket[0].customComplain ?? activeTicket[0].complain?.complain),
                               )
                             ],
                           ),
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                   text: activeTicket[0].time != null
                                       ? DateFormat('MM/dd/yyyy h:mm a').format(
                                           activeTicket[0].time!.toLocal())
-                                      : "",
+                                      : "-",
                                 ),
                               )
                             ],
@@ -116,9 +116,29 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Assigned by"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text:
-                                      "${activeTicket[0].callRecivedBy?.firstName} ${activeTicket[0].callRecivedBy?.lastName}" ??
-                                          "",
+                                  text: activeTicket[0].allocator?.firstName ==
+                                          "null"
+                                      ? "-"
+                                      : "${activeTicket[0].allocator?.firstName} ${activeTicket[0].allocator?.lastName}" ?? "-",
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 80),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SmallText(text: "Call Received by"),
+                              Expanded(
+                                child: DiscriptiveText(
+                                  text: activeTicket[0]
+                                              .callRecivedBy
+                                              ?.firstName ==
+                                          "null"
+                                      ? "-"
+                                      : "${activeTicket[0].callRecivedBy?.firstName} ${activeTicket[0].callRecivedBy?.lastName}" ?? "-",
                                 ),
                               )
                             ],
@@ -136,7 +156,9 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Name"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text: activeTicket[0].party?.name ?? "",
+                                  text: activeTicket[0].party?.name == "null"
+                                      ? "-"
+                                      : activeTicket[0].party?.name ?? "-",
                                 ),
                               )
                             ],
@@ -150,7 +172,10 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Phone"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text: activeTicket[0].party?.mobileNo ?? "",
+                                  text: activeTicket[0].party?.mobileNo ==
+                                          "null"
+                                      ? "-"
+                                      : activeTicket[0].party?.mobileNo ?? "",
                                 ),
                               )
                             ],
@@ -164,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Address"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text: activeTicket[0].party?.address ?? "",
+                                  text: activeTicket[0].party?.address == "null"
+                                      ? "-"
+                                      : activeTicket[0].party?.address ?? "-",
                                 ),
                               )
                             ],
@@ -182,9 +209,14 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Name"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text:
-                                      "${activeTicket[0].party?.owner["first_name"]} ${activeTicket[0].party?.owner["last_name"]}" ??
-                                          "",
+                                  text: activeTicket[0]
+                                              .party
+                                              ?.owner
+                                              ?.firstName ==
+                                          "null"
+                                      ? "-"
+                                      : "${activeTicket[0].party?.owner?.firstName} ${activeTicket[0].party?.owner?.lastName}" ??
+                                          "-",
                                 ),
                               )
                             ],
@@ -198,10 +230,15 @@ class _HomePageState extends State<HomePage> {
                               const SmallText(text: "Phone"),
                               Expanded(
                                 child: DiscriptiveText(
-                                  text: activeTicket[0]
-                                          .party
-                                          ?.owner["mobile_no"] ??
-                                      "",
+                                  text:
+                                      activeTicket[0].party?.owner?.mobileNo ==
+                                              "null"
+                                          ? "-"
+                                          : activeTicket[0]
+                                                  .party
+                                                  ?.owner
+                                                  ?.mobileNo ??
+                                              "-",
                                 ),
                               )
                             ],

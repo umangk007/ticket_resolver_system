@@ -39,9 +39,10 @@ class TicketModel {
 class Result {
   int? id;
   Party? party;
-  dynamic complain;
-  CallRecivedBy? engineer;
-  CallRecivedBy? callRecivedBy;
+  Complain? complain;
+  Allocator? engineer;
+  Allocator? callRecivedBy;
+  Allocator? allocator;
   dynamic customComplain;
   DateTime? time;
   DateTime? createdOn;
@@ -50,6 +51,7 @@ class Result {
   int? complainId;
   int? engineerId;
   int? callReciverId;
+  int? allocatorId;
 
   Result({
     this.id,
@@ -57,6 +59,7 @@ class Result {
     this.complain,
     this.engineer,
     this.callRecivedBy,
+    this.allocator,
     this.customComplain,
     this.time,
     this.createdOn,
@@ -65,14 +68,16 @@ class Result {
     this.complainId,
     this.engineerId,
     this.callReciverId,
+    this.allocatorId,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["id"],
     party: json["party"] == null ? null : Party.fromJson(json["party"]),
     complain: json["complain"] == null ? null : Complain.fromJson(json["complain"]),
-    engineer: json["engineer"] == null ? null : CallRecivedBy.fromJson(json["engineer"]),
-    callRecivedBy: json["call_recived_by"] == null ? null : CallRecivedBy.fromJson(json["call_recived_by"]),
+    engineer: json["engineer"] == null ? null : Allocator.fromJson(json["engineer"]),
+    callRecivedBy: json["call_recived_by"] == null ? null : Allocator.fromJson(json["call_recived_by"]),
+    allocator: json["allocator"] == null ? null : Allocator.fromJson(json["allocator"]),
     customComplain: json["custom_complain"],
     time: json["time"] == null ? null : DateTime.parse(json["time"]),
     createdOn: json["created_on"] == null ? null : DateTime.parse(json["created_on"]),
@@ -81,6 +86,7 @@ class Result {
     complainId: json["complain_id"],
     engineerId: json["engineer_id"],
     callReciverId: json["call_reciver_id"],
+    allocatorId: json["allocator_id"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -89,6 +95,7 @@ class Result {
     "complain": complain?.toJson(),
     "engineer": engineer?.toJson(),
     "call_recived_by": callRecivedBy?.toJson(),
+    "allocator": allocator?.toJson(),
     "custom_complain": customComplain,
     "time": time?.toIso8601String(),
     "created_on": createdOn?.toIso8601String(),
@@ -97,10 +104,11 @@ class Result {
     "complain_id": complainId,
     "engineer_id": engineerId,
     "call_reciver_id": callReciverId,
+    "allocator_id": allocatorId,
   };
 }
 
-class CallRecivedBy {
+class Allocator {
   int? id;
   DateTime? lastLogin;
   bool? isSuperuser;
@@ -110,9 +118,9 @@ class CallRecivedBy {
   bool? isStaff;
   bool? isActive;
   DateTime? dateJoined;
-  dynamic username;
+  String? username;
   String? mobileNo;
-  dynamic profilePic;
+  String? profilePic;
   String? address;
   String? city;
   String? state;
@@ -121,10 +129,11 @@ class CallRecivedBy {
   String? password2;
   String? password;
   bool? isWorking;
+  bool? isAllocated;
   List<dynamic>? groups;
   List<dynamic>? userPermissions;
 
-  CallRecivedBy({
+  Allocator({
     this.id,
     this.lastLogin,
     this.isSuperuser,
@@ -145,11 +154,12 @@ class CallRecivedBy {
     this.password2,
     this.password,
     this.isWorking,
+    this.isAllocated,
     this.groups,
     this.userPermissions,
   });
 
-  factory CallRecivedBy.fromJson(Map<String, dynamic> json) => CallRecivedBy(
+  factory Allocator.fromJson(Map<String, dynamic> json) => Allocator(
     id: json["id"],
     lastLogin: json["last_login"] == null ? null : DateTime.parse(json["last_login"]),
     isSuperuser: json["is_superuser"],
@@ -170,6 +180,7 @@ class CallRecivedBy {
     password2: json["password2"],
     password: json["password"],
     isWorking: json["is_working"],
+    isAllocated: json["is_allocated"],
     groups: json["groups"] == null ? [] : List<dynamic>.from(json["groups"]!.map((x) => x)),
     userPermissions: json["user_permissions"] == null ? [] : List<dynamic>.from(json["user_permissions"]!.map((x) => x)),
   );
@@ -195,6 +206,7 @@ class CallRecivedBy {
     "password2": password2,
     "password": password,
     "is_working": isWorking,
+    "is_allocated": isAllocated,
     "groups": groups == null ? [] : List<dynamic>.from(groups!.map((x) => x)),
     "user_permissions": userPermissions == null ? [] : List<dynamic>.from(userPermissions!.map((x) => x)),
   };
@@ -222,7 +234,7 @@ class Complain {
 
 class Party {
   int? id;
-  dynamic owner;
+  Allocator? owner;
   String? name;
   String? email;
   String? mobileNo;
@@ -231,7 +243,7 @@ class Party {
   String? state;
   DateTime? createdOn;
   dynamic logo;
-  dynamic ownerId;
+  int? ownerId;
 
   Party({
     this.id,
@@ -249,7 +261,7 @@ class Party {
 
   factory Party.fromJson(Map<String, dynamic> json) => Party(
     id: json["id"],
-    owner: json["owner"],
+    owner: json["owner"] == null ? null : Allocator.fromJson(json["owner"]),
     name: json["name"],
     email: json["email"],
     mobileNo: json["mobile_no"],
@@ -263,7 +275,7 @@ class Party {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "owner": owner,
+    "owner": owner?.toJson(),
     "name": name,
     "email": email,
     "mobile_no": mobileNo,
@@ -275,3 +287,4 @@ class Party {
     "owner_id": ownerId,
   };
 }
+

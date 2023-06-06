@@ -74,9 +74,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CommenTextfield(controller: pN, field: false),
-                    const RequiredField(),
+                    const SizedBox(height: 10,),
                     CommenTextfield(
-                      hintText: "Mlc type & model",
+                      hintText: "Mlc type & model *",
                       validate: (value) {
                         if (value!.isEmpty) {
                           return "";
@@ -86,9 +86,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       },
                       controller: mlcController,
                     ),
-                    const RequiredField(),
+                    const SizedBox(height: 10,),
                     CommenTextfield(
-                      hintText: "Nature of Complaint",
+                      hintText: "Nature of Complaint *",
                       validate: (value) {
                         if (value!.isEmpty) {
                           return "";
@@ -98,9 +98,12 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       },
                       controller: complaintController,
                     ),
-                    const RequiredField(),
+                    const SizedBox(height: 10,),
                     CommenTextfield(
-                      hintText: "Action taken",
+                      hintText: "Action taken *",
+                      textInputType: TextInputType.multiline,
+                      minLine: 3,
+                      maxLine: 5,
                       validate: (value) {
                         if (value!.isEmpty) {
                           return "";

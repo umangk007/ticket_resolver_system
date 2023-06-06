@@ -86,17 +86,22 @@ class DiscriptiveText extends StatelessWidget {
 class CommenTextfield extends StatefulWidget {
   String? hintText;
   bool? field;
-  bool? isInt;
+  TextInputType? textInputType;
+  int? minLine;
+  int? maxLine;
   String? Function(String?)? validate;
   TextEditingController controller;
 
-  CommenTextfield(
-      {super.key,
-      this.hintText,
-      required this.controller,
-      this.field,
-      this.isInt = false,
-      this.validate});
+  CommenTextfield({
+    super.key,
+    this.hintText,
+    this.field,
+    this.textInputType,
+    this.minLine,
+    this.maxLine,
+    this.validate,
+    required this.controller,
+  });
 
   @override
   State<CommenTextfield> createState() => _CommenTextfieldState();
@@ -136,18 +141,15 @@ class _CommenTextfieldState extends State<CommenTextfield> {
     return TextFormField(
       controller: widget.controller,
       enabled: widget.field,
-      keyboardType: widget.isInt!
-          ? const TextInputType.numberWithOptions(
-              decimal: false,
-            )
-          : null,
+      keyboardType: widget.textInputType,
+      minLines: widget.minLine,
+      maxLines: widget.maxLine,
       style: const TextStyle(
         fontSize: 12,
       ),
       decoration: InputDecoration(
         focusColor: green,
-        contentPadding:
-        const EdgeInsets.only(top: 15, left: 15),
+        contentPadding: const EdgeInsets.only(top: 15, left: 15),
         enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: green),
             borderRadius: BorderRadius.circular(8)),
@@ -215,8 +217,7 @@ class _CommenSmallTextfieldState extends State<CommenSmallTextfield> {
         ),
         decoration: InputDecoration(
           focusColor: green,
-          contentPadding:
-          const EdgeInsets.only(top: 15, left: 15),
+          contentPadding: const EdgeInsets.only(top: 15, left: 15),
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: green),
               borderRadius: BorderRadius.circular(8)),
@@ -314,21 +315,6 @@ class CommenButton extends StatelessWidget {
           ]
         ]),
       ),
-    );
-  }
-}
-
-class RequiredField extends StatelessWidget {
-  const RequiredField({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 2),
-      alignment: Alignment.centerRight,
-      child: const Text("Required", style: TextStyle(color: Colors.red)),
     );
   }
 }
