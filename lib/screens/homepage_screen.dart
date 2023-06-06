@@ -358,6 +358,13 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
         hasTicket = false;
       });
+      const SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.deepOrange,
+        content:
+            Text('Something went wrong, please try again or contact to admin.'),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       // log(e.toString());
     }
   }

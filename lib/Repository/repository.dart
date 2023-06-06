@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +54,7 @@ class Repository {
         }
       } else if (context.mounted) {
         const SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.deepOrange,
           content: Text('Username or Password is invalid.'),
           duration: Duration(seconds: 2),
         );
@@ -61,6 +63,7 @@ class Repository {
       }
     } catch (e) {
       const SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.deepOrange,
         content: Text('Username or Password is invalid.'),
         duration: Duration(seconds: 2),
       );
@@ -99,6 +102,12 @@ class Repository {
             ));
       }
     } catch (e) {
+      const SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.deepOrange,
+        content: Text('Something went wrong, please try again or contact to admin.'),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       log(e.toString());
     }
   }
@@ -127,7 +136,6 @@ class Repository {
     } catch (e) {
       log(e.toString());
     }
-    return response;
   }
 
   Future<dynamic> getProfileData() async {
@@ -211,6 +219,12 @@ class Repository {
             ));
       }
     } catch (e) {
+      const SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.deepOrange,
+        content: Text('Something went wrong, please try again or contact to admin.'),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       log(e.toString());
     }
   }
@@ -237,9 +251,21 @@ class Repository {
         var body = json.decode(responseBody);
         return body['image_url'];
       } else {
+        const SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.deepOrange,
+          content: Text('Something went wrong, please try again or contact to admin.'),
+          duration: Duration(seconds: 2),
+        );
+        ScaffoldMessenger.of(context as BuildContext).showSnackBar(snackBar);
         return '';
       }
     } catch (e) {
+      const SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.deepOrange,
+        content: Text('Something went wrong, please try again or contact to admin.'),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context as BuildContext).showSnackBar(snackBar);
       log(e.toString());
     }
   }
