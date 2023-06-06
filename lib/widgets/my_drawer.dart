@@ -51,7 +51,7 @@ class _MyDrawerState extends State<MyDrawer> {
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
-              child: widget.profilePic != "null"
+              child: widget.profilePic != null
                   ? CircleAvatar(
                 radius: 50,
                 backgroundImage: NetworkImage(widget.profilePic!),
@@ -65,7 +65,7 @@ class _MyDrawerState extends State<MyDrawer> {
             Container(
               margin: const EdgeInsets.only(top: 15),
               alignment: Alignment.center,
-              child: Text("${widget.firstName} ${widget.lastName}" ?? "",
+              child: Text( widget.firstName == null ? "-" : "${widget.firstName} ${widget.lastName}" ?? "-",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 18)),
             ),

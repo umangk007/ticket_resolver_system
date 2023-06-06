@@ -47,7 +47,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
-              child: widget.profilePic != "null"
+              child: widget.profilePic != null
                   ? CircleAvatar(
                 radius: 70,
                 backgroundImage: NetworkImage(widget.profilePic!),
@@ -67,7 +67,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "Name"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: "${widget.firstName} ${widget.lastName}" ?? "",
+                    text: widget.firstName == null ? "-" : "${widget.firstName} ${widget.lastName}" ?? "-",
                   ),
                 )
               ],
@@ -81,7 +81,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "Phone"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.phone ?? "",
+                    text: widget.phone == null ? "-" : widget.phone ?? "-",
                   ),
                 )
               ],
@@ -95,7 +95,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "Email"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.email ?? "",
+                    text: widget.email == null ? "-" : widget.email ?? "-",
                   ),
                 )
               ],
@@ -109,7 +109,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "Address"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.address ?? "",
+                    text: widget.address == null ? "-" : widget.address ?? "-",
                   ),
                 )
               ],
@@ -123,7 +123,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "City"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.city ?? "",
+                    text: widget.city == null ? "-" : widget.city ?? "-",
                   ),
                 )
               ],
@@ -137,7 +137,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 const SmallText(text: "State"),
                 Expanded(
                   child: DiscriptiveText(
-                    text: widget.state ?? "",
+                    text: widget.state == null ? "-" : widget.state ?? "-",
                   ),
                 )
               ],
@@ -154,7 +154,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     text: widget.dateJoined != null
                         ? DateFormat('MM/dd/yyyy h:mm a').format(
                             DateTime.tryParse(widget.dateJoined!)!.toLocal())
-                        : "",
+                        : "-",
                   ),
                 )
               ],
