@@ -160,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () {
                         const SnackBar snackBar = SnackBar(
+                          backgroundColor: Colors.deepOrange,
                           content: Text(
                               "Please contact admin to change your password"),
                           duration: Duration(seconds: 4),

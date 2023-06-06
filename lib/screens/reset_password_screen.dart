@@ -181,6 +181,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 });
                             } else {
                               const SnackBar snackBar = SnackBar(
+                                backgroundColor: Colors.deepOrange,
                                 content:
                                     Text('Both the passwords are not same.'),
                                 duration: Duration(seconds: 2),
