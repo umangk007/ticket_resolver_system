@@ -74,7 +74,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CommenTextfield(controller: pN, field: false),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CommenTextfield(
                       hintText: "Mlc type & model *",
                       validate: (value) {
@@ -86,7 +88,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       },
                       controller: mlcController,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CommenTextfield(
                       hintText: "Nature of Complaint *",
                       validate: (value) {
@@ -98,7 +102,9 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                       },
                       controller: complaintController,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CommenTextfield(
                       hintText: "Action taken *",
                       textInputType: TextInputType.multiline,
@@ -195,7 +201,7 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                               });
                               await saveImageToMobile();
                               // ignore: use_build_context_synchronously
-                            await Repository().feedbackForm(
+                              await Repository().feedbackForm(
                                   context,
                                   widget.partyId,
                                   widget.ticketId,
@@ -222,12 +228,13 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
                                       : double.parse(item.text)),
                                   srno.text.isEmpty ? "null" : srno.text,
                                   uploadedImageUrl);
-                                setState(() {
-                                  isLoading = false;
-                                });
+                              setState(() {
+                                isLoading = false;
+                              });
                             } else {
                               const SnackBar snackBar = SnackBar(
                                 content: Text('Please add Signature.'),
+                                backgroundColor: Colors.deepOrange,
                                 duration: Duration(seconds: 2),
                               );
                               ScaffoldMessenger.of(context)
@@ -334,17 +341,6 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
     return signature;
   }
 
-  requestStoragePermission() async {
-    var status = await Permission.storage.status;
-    if (status.isGranted) {
-      print("Permission Granted!!");
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      if (await Permission.storage.request().isGranted) {
-        print("Permission Granted!!");
-      }
-    }
-  }
-
   String formattedDate() {
     DateTime dateTime = DateTime.now();
     String dateTimeString =
@@ -353,7 +349,6 @@ class _ReportFormScreenState extends State<ReportFormScreen> {
   }
 
   saveImageToMobile() async {
-    await requestStoragePermission();
     Directory? directory = await getApplicationDocumentsDirectory();
     String? path = directory.path;
     var filePath = '$path/$directoryName/${formattedDate()}.png';
