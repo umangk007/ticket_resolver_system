@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 child: DiscriptiveText(
                                     text:
-                                         activeTicket[0].customComplain ?? activeTicket[0].complain?.complain),
+                                         activeTicket[0].customComplain ?? activeTicket[0].complain?.complain ?? "-"),
                               )
                             ],
                           ),
